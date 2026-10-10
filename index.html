@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<script src="native-shim.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>NK MessMate</title>
+<style>
+:root{color-scheme:light;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f4f7fc;--card:#fff;--bd:#e4eaf4;--tx:#0f1b33;--mu:#6b7a90;--hov:#f0f4fb;
+--pr:#3b6ef5;--prd:#2c59d6;--prl:#e8efff;--ind:#6366f1;--indl:#eceeff;--tea:#0d9488;--teal:#e0f5f2;
+--ok:#16a34a;--okl:#e6f6ec;--wn:#d97706;--wnl:#fff3dd;--bad:#dc2626;--badl:#fdeaea;--inf:#0284c7;--infl:#e3f3fc;
+--ac:var(--pr);--on:#fff;--gd:var(--pr);--gdl:var(--prl);--gdt:var(--prd);
+--r:16px;--sh:0 1px 2px rgba(15,27,51,.04),0 8px 24px rgba(15,27,51,.06);--sp:14px}
+*{-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+main{max-width:880px;margin:0 auto;padding:12px 14px 40px}
+h2{font-size:16px;margin:0 0 8px}
+.ic{width:20px;height:20px;flex:none}
+/* header */
+#hdr{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--bd)}
+.top{position:relative;max-width:880px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 14px 8px}
+.bl{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:44px;height:44px;border-radius:50%;flex:none;background:#fff;box-shadow:0 0 0 1.5px var(--bd),0 2px 8px rgba(15,27,51,.12)}.logo.big{width:64px;height:64px}
+.brand{white-space:nowrap;font-size:17.5px;font-weight:800;letter-spacing:-.01em;line-height:1.15}
+.sub{font-size:12px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.syn{font-size:12px;color:var(--mu)}
+.top .tr{margin-left:auto;display:flex;align-items:center;gap:8px}
+.top>div:first-child{min-width:0}
+.monb{display:flex;align-items:center;gap:6px;font-size:14.5px;font-weight:700;padding:0 12px;height:40px;border-radius:999px;border:1px solid var(--bd);color:var(--pr);background:var(--card);box-shadow:var(--sh);white-space:nowrap}
+.monb .ic{width:17px;height:17px}.monb .cv{width:15px;height:15px;opacity:.7}
+#setb{width:40px;height:40px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--sh)}
+.navb{max-width:880px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:2px 14px 10px;scrollbar-width:none;scroll-snap-type:x proximity}
+.navb::-webkit-scrollbar{display:none}
+.nc{flex:none;display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--bd);background:var(--card);color:var(--mu);font-size:13.5px;font-weight:600;white-space:nowrap;min-height:0;scroll-snap-align:start}
+.nc .ic{width:16px;height:16px}
+.nc.on{background:var(--prl);border-color:transparent;color:var(--pr)}
+.nc.pnd:after{content:"";width:6px;height:6px;border-radius:50%;background:var(--pr);margin-left:2px}
+.monp{position:absolute;right:14px;top:100%;margin-top:6px;z-index:60;background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px;width:min(calc(100% - 28px),420px);box-shadow:0 16px 40px rgba(15,27,51,.22);box-sizing:border-box;animation:pop .16s ease}
+/* cards */
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:var(--sp);margin-bottom:12px;box-shadow:var(--sh)}
+.dash{padding:14px}.dh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.dh b{font-size:16px}.dh span#dmon{color:var(--mu);margin-left:8px;font-size:13px}
+.dg{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+@media (min-width:640px){.dg{grid-template-columns:repeat(4,1fr)}}
+.dc{display:flex;align-items:center;gap:9px;background:var(--bg);border-radius:14px;padding:9px 10px;min-width:0}
+.dc small{display:block;color:var(--mu);font-size:11.5px;font-weight:600;white-space:nowrap}.dc b{font-size:18px;letter-spacing:-.01em;white-space:nowrap}.dc i{font-style:normal;font-size:11px;color:var(--mu);margin-left:4px}
+.dc>div{min-width:0}
+.ib{width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex:none;background:var(--prl);color:var(--pr)}
+.ib.c2{background:var(--infl);color:var(--inf)}.ib.c3{background:var(--okl);color:var(--ok)}.ib.c4{background:var(--indl);color:var(--ind)}.ib.c5{background:var(--indl);color:var(--ind)}.ib.c6{background:var(--prl);color:var(--pr)}.ib.c7{background:var(--okl);color:var(--ok)}.ib.cw{background:var(--wnl);color:var(--wn)}.ib.cr{background:var(--badl);color:var(--bad)}.ib.ct{background:var(--teal);color:var(--tea)}
+/* badges */
+.bd{display:inline-flex;align-items:center;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--hov);color:var(--mu);white-space:nowrap}
+.bd.g{background:var(--okl);color:var(--ok)}.bd.o{background:var(--wnl);color:var(--wn)}.bd.r{background:var(--badl);color:var(--bad)}.bd.b{background:var(--prl);color:var(--pr)}.bd.i{background:var(--indl);color:var(--ind)}.bd.n{background:var(--hov);color:var(--mu)}
+/* sections */
+.tab{position:relative;background:var(--card);border:1px solid var(--bd);border-radius:var(--r);margin-bottom:10px;box-shadow:var(--sh);scroll-margin-top:118px;transition:border-color .15s,box-shadow .15s}
+.tab.pinned{border-color:var(--pr)}
+.th{display:flex;align-items:stretch}
+.thb{flex:1;display:flex;justify-content:flex-start;align-items:center;gap:11px;text-align:left;border:0;background:transparent;padding:12px 6px 12px 12px;min-width:0;border-radius:var(--r);color:var(--tx);min-height:0}
+.thb:hover{background:var(--hov)}
+.tx{display:flex;flex-direction:column;min-width:0}.tt{font-weight:700;font-size:15.5px;white-space:nowrap}.td{font-size:12px;color:var(--mu);font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ts{margin-left:auto;font-size:12px;font-weight:600;color:var(--mu);background:var(--hov);border-radius:999px;padding:3px 9px;white-space:nowrap;max-width:46%;overflow:hidden;text-overflow:ellipsis}.ts:empty{display:none}
+@media (max-width:520px){.ts{display:none}#sync{display:none}.monb{padding:0 10px}.top{gap:8px}}
+.chev{color:var(--mu);transition:transform .2s;margin-left:2px}.tab.open .chev{transform:rotate(180deg)}
+.pin{border:0;background:transparent;padding:0 12px;color:var(--mu);opacity:.45;min-height:0;border-radius:0 var(--r) var(--r) 0}
+.tab.pinned .pin{opacity:1;color:var(--pr)}.pin .ic{width:18px;height:18px}
+.tb{padding:2px 14px 14px;display:none}
+.tab.open .tb{animation:fade .2s ease}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes sheet{from{transform:translateY(30px);opacity:.4}to{transform:none;opacity:1}}
+/* forms */
+.w{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:480px}
+th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{font-size:11px;color:var(--mu);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child>td{border-bottom:0}
+input,select{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:8px 11px;min-height:40px;box-sizing:border-box;max-width:100%;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--pr);box-shadow:0 0 0 3px var(--prl)}
+input[type=checkbox]{min-height:0;accent-color:var(--pr);width:20px;height:20px}
+td input[type=number]{width:96px}td input[type=text]{width:130px}
+button{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:12px;padding:8px 14px;min-height:40px;cursor:pointer;font-weight:600;transition:background .12s,transform .08s,border-color .12s}
+button:hover{background:var(--hov)}button:active{transform:scale(.97)}
+button:disabled{opacity:.5;cursor:default;transform:none}
+button.p{background:var(--pr);color:#fff;border-color:var(--pr)}button.p:hover{background:var(--prd)}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:8px}
+.row label{display:flex;flex-direction:column;font-size:12px;color:var(--mu);gap:4px;font-weight:600}
+.row input,.row select{width:150px}
+.pay{color:var(--bad);font-weight:700}.get{color:var(--ok);font-weight:700}
+.wn{color:var(--wn);font-weight:600}
+tfoot td{font-weight:700;border-top:2px solid var(--bd)}
+.kpi{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;font-size:13.5px}.kpi span{background:var(--bg);border-radius:10px;padding:6px 11px}.kpi b{font-size:15px}
+.x{padding:0;width:38px;min-height:38px;display:inline-flex;align-items:center;justify-content:center;color:var(--mu)}.x .ic{width:17px;height:17px}.x:hover{color:var(--bad)}
+h3{font-size:12px;margin:14px 0 6px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;font-weight:700}.tk{width:24px;height:24px}
+.nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.nav select{font-size:16px;padding:7px 8px}.nav button{padding:7px 14px}
+.hist{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:7px 12px;border-radius:12px;min-height:0}.chip span{font-size:12px;color:var(--mu);font-weight:500}.chip.on{border-color:var(--pr);background:var(--prl)}
+td select{max-width:160px}
+summary{cursor:pointer;font-weight:600;color:var(--pr);padding:6px 0}
+textarea{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;box-sizing:border-box;width:100%}
+small{color:var(--mu)}
+#imout table{min-width:560px}
+.empt{color:var(--mu);text-align:center;padding:18px 8px;background:var(--bg);border-radius:14px;font-size:13.5px}
+/* avatars */
+.av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex:none;background:var(--prl);color:var(--pr)}
+.av.a1{background:var(--indl);color:var(--ind)}.av.a2{background:var(--teal);color:var(--tea)}.av.a3{background:var(--infl);color:var(--inf)}
+/* people overview */
+.plist{display:grid;gap:8px;margin-bottom:12px}
+@media (min-width:640px){.plist{grid-template-columns:1fr 1fr}}
+.pc{display:flex;align-items:center;gap:11px;background:var(--bg);border-radius:14px;padding:10px 12px}
+.pnm{display:flex;flex-direction:column;min-width:0;flex:1}.pnm b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pnm small{font-size:12px}
+.pr{display:flex;flex-direction:column;align-items:flex-end;gap:3px}.pr>b{font-size:16px}
+/* utilities */
+.bills{display:grid;gap:10px;margin-bottom:10px}
+@media (min-width:640px){.bills{grid-template-columns:1fr 1fr}}
+.bill{border:1px solid var(--bd);border-radius:16px;padding:14px;background:var(--bg)}
+.bill .bh{display:flex;align-items:center;gap:10px;margin-bottom:8px}.bill .bh b{display:block}.bill .bh small{font-size:12px}
+.bigf{display:flex;align-items:baseline;gap:8px;color:var(--mu);font-weight:700}
+.bigf input{flex:1;min-width:0;font-size:30px;font-weight:800;letter-spacing:-.02em;border:0;background:transparent;padding:0;min-height:44px;width:100%;color:var(--tx)}
+.bigf input:focus{box-shadow:none}
+.bill label.sm{display:flex;flex-direction:column;font-size:12px;color:var(--mu);gap:4px;font-weight:600;margin-top:10px}.bill label.sm input{background:var(--card)}
+/* transactions */
+.txl{display:grid;gap:8px;margin-bottom:10px}
+.txn{display:grid;grid-template-columns:auto 1fr auto;gap:8px 10px;align-items:center;background:var(--bg);border-radius:14px;padding:10px;transition:background .2s}
+.txn>.av{grid-row:1/3}.txn>.x{justify-self:end}.txn .amt{justify-self:end}
+.txn select{width:100%;max-width:none;background:var(--card);min-height:40px;padding:6px 10px;min-width:0}
+.txn .payer{font-weight:700}
+.amt{display:flex;align-items:center;gap:5px;color:var(--mu);font-size:12px;font-weight:700}
+.amt input{width:92px;text-align:right;font-weight:800;font-size:16px;background:var(--card);color:var(--tx)}
+.txn.adv{display:flex;flex-direction:column;align-items:stretch}
+.ar{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}.ar select{width:100%;min-width:0}.arw{color:var(--ind);display:flex}
+.ar2{display:flex;gap:8px;align-items:center}.ar2 select{flex:1;min-width:0}
+.txn.s{display:flex;gap:10px}.txn.s .tm{flex:1;min-width:0;display:flex;flex-direction:column}.txn.s .tm b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.txn.s .tm small{font-size:11.5px;line-height:1.3}.txn.s>b{font-size:16px;white-space:nowrap}
+.txn.done{background:var(--okl)}
+.tkl{display:flex;align-items:center;justify-content:center;width:34px;height:34px}.tk{width:22px;height:22px}
+.x.m:hover{color:var(--pr)}
+.chps{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}.chps:empty{display:none}.chp{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border-radius:999px;padding:3px 11px 3px 3px;font-size:13px;font-weight:500}.chp .av{width:24px;height:24px;font-size:11px}
+.pg{margin:10px 0}.pgh{display:flex;justify-content:space-between;font-size:13px}.pgh span{color:var(--mu)}
+.bar{height:8px;background:var(--hov);border-radius:6px;overflow:hidden;margin-top:5px}.bar i{display:block;height:100%;background:var(--pr);border-radius:6px;transition:width .3s}.bar i.ok{background:var(--ok)}
+/* final bill cards */
+.fcs{display:grid;gap:10px;margin:10px 0}
+@media (min-width:700px){.fcs{grid-template-columns:1fr 1fr}}
+.fc{border:1px solid var(--bd);border-radius:18px;padding:14px;background:var(--card);box-shadow:var(--sh)}
+.fh{display:flex;align-items:center;gap:10px}.fn{flex:1;min-width:0;display:flex;flex-direction:column}.fn b{font-size:16.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fn small{font-size:12px}
+.fl{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:12px 0;padding:10px 12px;background:var(--bg);border-radius:12px}
+.fi{display:flex;justify-content:space-between;gap:8px;font-size:13px}.fi span{color:var(--mu)}.fi b{font-weight:700}
+.ff{display:flex;align-items:flex-end;justify-content:space-between;border-radius:14px;padding:10px 14px}
+.ff span{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}.ff b{font-size:28px;letter-spacing:-.02em;line-height:1.1}.ff small{font-size:13px;font-weight:700}
+.fc.dn .ff{background:var(--badl);color:var(--bad)}.fc.ex .ff{background:var(--okl);color:var(--ok)}.fc.ok .ff{background:var(--hov);color:var(--mu)}.fc .ff small{color:inherit;opacity:.8}
+details.dt{margin:6px 0}
+/* settlement */
+.ss{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+@media (min-width:640px){.ss{grid-template-columns:repeat(4,1fr)}}
+.sc{border-radius:16px;padding:12px 14px}.sc small{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;color:inherit;opacity:.85}.sc b{font-size:22px;letter-spacing:-.02em}.sc i{font-style:normal;font-size:11px;font-weight:700;margin-left:3px}
+.sc.sr{background:var(--badl);color:var(--bad)}.sc.sg{background:var(--okl);color:var(--ok)}.sc.sb{background:var(--prl);color:var(--pr)}.sc.sw{background:var(--wnl);color:var(--wn)}
+.step{border:1px solid var(--bd);border-radius:16px;padding:12px;margin-bottom:10px}
+.step .sh{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:15px}
+.csn{margin:8px 0}
+/* modals */
+.mod{position:fixed;inset:0;background:rgba(15,27,51,.45);align-items:center;justify-content:center;z-index:80;padding:16px;animation:fade .15s ease}
+.box{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:22px;padding:18px;width:100%;max-width:360px;box-shadow:0 20px 50px rgba(15,27,51,.3);animation:pop .18s ease}
+.box label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mu);margin-bottom:8px;font-weight:600}.box input{font-size:16px;width:100%}
+.box.big{max-width:560px;max-height:92vh;overflow:auto}
+.sh0{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.sh0 b{font-size:19px}
+.sgr{background:var(--bg);border-radius:16px;padding:12px 14px;margin-top:12px}.sgt{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--mu);margin-bottom:8px}
+.sgr label{margin-bottom:4px}.sgr input{background:var(--card)}
+.kv{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid var(--bd);font-size:14px}.kv span{color:var(--mu)}
+.abt{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.panel{border:1px solid var(--bd);border-radius:14px;padding:12px;margin:10px 0;background:var(--card)}
+@media (max-width:560px){.mod.sheetm{align-items:flex-end;padding:0}.mod.sheetm .box.big{border-radius:22px 22px 0 0;max-height:90vh;animation:sheet .22s ease;max-width:none}}
+body.locked #lockbar{border-color:var(--bad)}
+.noadv .cadv{display:none}
+.imgs{width:100%;max-width:760px;border:1px solid var(--bd);border-radius:16px;display:block;background:#fff;box-shadow:var(--sh)}
+@media (max-width:720px){
+.stk table,.stk tbody,.stk tfoot{display:block;min-width:0!important}.stk thead{display:none}
+.stk tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:10px;background:var(--bg)}
+.stk tr:last-child>td{border-bottom:0}
+.stk td{display:flex;flex-direction:column;gap:3px;border:0;padding:0;white-space:normal;min-width:0}
+.stk td::before{content:attr(data-l);font-size:10.5px;color:var(--mu);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.stk td[data-l=""]::before{display:none}.stk td[data-full]{grid-column:1/-1}
+.stk td input[type=number],.stk td input[type=text],.stk td select{width:100%;max-width:none;background:var(--card)}
+.stk td input[type=checkbox]{width:24px;height:24px}
+.stk tfoot tr{background:var(--prl)}
+.noadv .cadv{display:none}
+}
+@media (min-width:900px){.row input,.row select{width:170px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+button{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.ic{vertical-align:-4px}.tb p{margin:10px 0}.btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.ib .ic,.nc .ic,.x .ic,.pin .ic{vertical-align:middle}
+.lockrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#lockbar{border-color:var(--bad);background:var(--badl)}
+.seg{display:flex;background:var(--hov);border-radius:13px;padding:3px;gap:2px}
+.seg button{flex:1;border:0;background:transparent;min-height:40px;padding:6px 4px;font-size:11.5px;font-weight:800;letter-spacing:.02em;text-transform:uppercase;color:var(--mu);border-radius:10px;white-space:normal;line-height:1.15}
+.seg button.on{background:var(--card);color:var(--pr);box-shadow:0 1px 3px rgba(15,27,51,.15)}
+.hint{display:block;font-size:12px;color:var(--mu);margin-top:6px}
+.pe label{margin-bottom:10px}.pe .sgr{margin-top:10px}.pe .sgr label{margin:10px 0 0}
+.pc{cursor:pointer;transition:background .15s}.pc:hover{background:var(--hov)}.pc:active{transform:scale(.99)}
+.pnm small{display:block}
+.gx{display:grid;grid-template-columns:1fr auto;grid-template-areas:"nm dt" "am rm";gap:4px 8px;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:7px 9px;box-shadow:var(--sh)}
+.gx .payer{grid-area:nm;font-weight:700}.gx .gdt{grid-area:dt;font-size:13px;color:var(--mu);width:auto}.gx .amt{grid-area:am;justify-self:start}.gx .x{grid-area:rm;justify-self:end}
+.gx .x{min-height:34px;width:34px}.gx select{min-height:36px;padding:4px 8px;min-width:0;max-width:none;background:var(--bg)}.gx .payer{width:100%}
+.gx .amt input{width:124px;min-height:34px;font-size:17px;font-weight:800;text-align:left;background:transparent;border-color:transparent;padding-left:6px}.gx .amt input:focus{background:var(--bg)}
+@media (min-width:640px){.gx{grid-template-columns:1.4fr 1fr 170px 40px;grid-template-areas:"nm dt am rm"}}
+.msgb{margin-top:10px;width:100%;min-height:38px;font-size:13px}
+
+/* ---- v17 ---- */
+.pc{align-items:center}
+.pdays{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pdays span{background:var(--card);border:1px solid var(--bd);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600;color:var(--mu);white-space:nowrap}
+.pdays span b{color:var(--tx);font-weight:800}
+.pdays span.fx{background:var(--indl);border-color:transparent;color:var(--ind)}.pdays span.fx b{color:var(--ind)}
+.pdays span.no{opacity:.75}
+.pgo{color:var(--mu);display:flex;flex:none}.pgo .ic{width:18px;height:18px;transform:rotate(-90deg)}
+#rtab{min-width:0;font-size:13px}
+#rtab th,#rtab td{padding:10px 7px}
+#rtab th{white-space:normal;line-height:1.25;vertical-align:bottom;font-size:10.5px}
+@media (max-width:900px){#rtab{min-width:780px;font-size:13.5px}#rtab th,#rtab td{padding:11px 9px}}
+#rtab th:first-child,#rtab td:first-child{position:sticky;left:0;background:var(--card);z-index:1;font-weight:700;box-shadow:1px 0 0 var(--bd)}
+.swp{display:none;color:var(--mu);font-size:12px;margin:2px 0 6px}
+@media (max-width:900px){.swp{display:block}}
+.mbar{display:flex;flex-wrap:wrap;gap:8px;background:var(--prl);border-radius:12px;padding:8px 10px 10px;margin:0 0 10px}
+.mbar>span{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--pr);width:100%}
+.mbar button{flex:1 1 150px;min-height:40px;font-size:13px;padding:6px 10px;background:var(--card);line-height:1.2}
+.txn.s{flex-wrap:wrap}.txn.s .tm{flex:1 1 110px}
+.mrow{display:flex;gap:8px;flex-basis:100%;width:100%}
+.mrow button{flex:1;min-height:36px;font-size:12.5px;padding:5px 8px;background:var(--card)}
+.mrow button.ok{background:var(--okl);color:var(--ok);border-color:transparent}
+.sgr textarea,.sgr select{background:var(--card)}
+#tpf textarea{min-height:96px;font-size:14px;line-height:1.4;margin-top:2px;font-weight:500}
+.tpc{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}.tpc button{min-height:30px;padding:2px 10px;font-size:12px;font-weight:700;border-radius:999px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.pv{white-space:pre-wrap;background:var(--card);border:1px dashed var(--bd);border-radius:12px;padding:10px 12px;font-size:13.5px;line-height:1.45;margin:6px 0;max-height:240px;overflow:auto;word-break:break-word}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(24px);background:var(--tx);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:120;max-width:90vw;text-align:center;box-shadow:0 8px 24px rgba(15,27,51,.3)}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---- v18 ---- */
+.xcol{white-space:normal}
+.noxb .xcol{display:none}
+.gx{grid-template-areas:"nm dt" "rk rk" "am rm"}
+.gx .rmk{grid-area:rk;width:100%;min-width:0;min-height:36px;padding:4px 10px;font-size:14px;background:var(--bg)}
+.gx .rmk::placeholder{color:var(--mu);opacity:.8}
+@media (min-width:640px){.gx{grid-template-columns:1.1fr 1fr 1.4fr 150px 40px;grid-template-areas:"nm dt rk am rm"}}
+#xbill .bigf input{font-size:26px}
+#xbill label.sm:first-of-type{margin-top:0}
+.btns .dl{background:var(--card)}
+
+/* ---- v19: header never overlaps ---- */
+.bl{flex:1 1 auto;min-width:0}
+.bl>div{overflow:hidden}
+.brand{overflow:hidden;text-overflow:ellipsis}
+.top .tr{flex:none}
+@media (max-width:420px){.top{padding-left:12px;padding-right:12px}.bl{gap:8px}.logo{width:38px;height:38px}.brand{font-size:16px}.monb{font-size:14px;padding:0 10px;gap:5px}.monb .cv{display:none}}
+@media (max-width:340px){.logo{width:34px;height:34px}.brand{font-size:15px}.monb .ic{display:none}.monb{padding:0 9px}.top .tr{gap:6px}}
+
+/* ---- v20: settlement tick beside the amount ---- */
+.txn.s .tm{flex:1 1 0;min-width:56px}
+.txn.s>.av,.txn.s>b,.txn.s>.tkl{flex:none}
+
+/* ---- v21: update link ---- */
+a.lnkb{display:inline-flex;align-items:center;justify-content:center;gap:6px;font:inherit;font-weight:600;border-radius:12px;padding:8px 14px;min-height:40px;text-decoration:none;background:var(--pr);color:#fff;border:1px solid var(--pr);transition:background .12s,transform .08s}
+a.lnkb:hover{background:var(--prd)}a.lnkb:active{transform:scale(.97)}
+
+/* ---- v22: online update ---- */
+.upbtns{display:flex;flex-wrap:wrap;gap:8px}
+.upmsg{margin-top:10px;font-size:13px;line-height:1.4;color:var(--mu)}
+.upnotes{background:var(--prl);border-radius:10px;padding:8px 10px;color:var(--tx)}
+.upreset{margin-top:12px;font-size:13px}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol><symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></symbol><symbol id="i-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s7 7.2 7 12a7 7 0 0 1-14 0c0-4.8 7-12 7-12z"/></symbol><symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></symbol><symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></symbol><symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h4"/></symbol><symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></symbol><symbol id="i-checkc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></symbol><symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol><symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol><symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24z"/></symbol><symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></symbol><symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol><symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></symbol><symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l4 4 4-4M12 8v8"/></symbol><symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 12l-4-4-4 4M12 16V8"/></symbol><symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol><symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></symbol><symbol id="i-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol><symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-unlock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></symbol><symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></symbol><symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></symbol><symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol><symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol><symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol><symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol><symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></symbol><symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol><symbol id="i-thumb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></symbol></defs></svg>
+<header id="hdr"><div class="top"><div class="bl"><img id="logoimg" class="logo" alt="NK MessMate logo"><div style="min-width:0"><div class="brand">NK MessMate</div><div class="sub"><span id="messname"></span> <span id="sync" class="syn"></span></div></div></div><div class="tr"><button id="monb" class="monb" data-keep onclick="monToggle()" aria-haspopup="true" aria-label="Change month"><svg class="ic " aria-hidden="true"><use href="#i-cal"/></svg><span id="monl"></span><svg class="ic cv" aria-hidden="true"><use href="#i-chev"/></svg></button><button id="setb" data-keep onclick="openSet()" aria-label="Settings / Config" title="Settings / Config"><svg class="ic " aria-hidden="true"><use href="#i-gear"/></svg></button></div>
+<div id="navc" class="monp" style="display:none"><div class="nav"><button onclick="stepMon(-1)" aria-label="Previous month">◀</button><select id="selm" onchange="pickMon()" aria-label="Month"></select><select id="sely" onchange="pickMon()" aria-label="Year"></select><button onclick="stepMon(1)" aria-label="Next month">▶</button></div>
+<div id="hist" class="hist"></div></div></div>
+<nav class="navb" id="navb" aria-label="Sections"><button class="nc" id="nc1" data-keep onclick="tabClick(1)"><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg>People</button><button class="nc" id="nc2" data-keep onclick="tabClick(2)"><svg class="ic " aria-hidden="true"><use href="#i-drop"/></svg>Internet &amp; Water</button><button class="nc" id="nc3" data-keep onclick="tabClick(3)"><svg class="ic " aria-hidden="true"><use href="#i-cart"/></svg>Grocery</button><button class="nc" id="nc4" data-keep onclick="tabClick(4)"><svg class="ic " aria-hidden="true"><use href="#i-wallet"/></svg>Advance</button><button class="nc" id="nc5" data-keep onclick="tabClick(5)"><svg class="ic " aria-hidden="true"><use href="#i-calc"/></svg>Final Bill</button><button class="nc" id="nc6" data-keep onclick="tabClick(6)"><svg class="ic " aria-hidden="true"><use href="#i-image"/></svg>Bill Image</button><button class="nc" id="nc7" data-keep onclick="tabClick(7)"><svg class="ic " aria-hidden="true"><use href="#i-checkc"/></svg>Settlement</button></nav></header>
+<main>
+<div class="card" id="lockbar" style="display:none"></div>
+<div class="card" id="emp" style="display:none"></div>
+<div class="card dash" id="dash"><div class="dh"><div><b>Overview</b><span id="dmon"></span></div><span class="bd b" id="dst">Open</span></div><div class="dg"><div class="dc"><span class="ib "><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg></span><div><small>People</small><b id="d1">0</b></div></div><div class="dc"><span class="ib cw"><svg class="ic " aria-hidden="true"><use href="#i-cart"/></svg></span><div><small>Total grocery</small><b id="d2">0</b><i>AED</i></div></div><div class="dc"><span class="ib c4"><svg class="ic " aria-hidden="true"><use href="#i-calc"/></svg></span><div><small>Mess rate / day</small><b id="d3">0</b><i>AED</i></div></div><div class="dc"><span class="ib ct"><svg class="ic " aria-hidden="true"><use href="#i-cal"/></svg></span><div><small>Person-days</small><b id="d4">0</b></div></div><div class="dc"><span class="ib c2"><svg class="ic " aria-hidden="true"><use href="#i-wifi"/></svg></span><div><small>Internet bill</small><b id="d5">0</b><i>AED</i></div></div><div class="dc"><span class="ib c2"><svg class="ic " aria-hidden="true"><use href="#i-drop"/></svg></span><div><small>Water bill</small><b id="d6">0</b><i>AED</i></div></div><div class="dc" id="dcx" style="display:none"><span class="ib c4"><svg class="ic " aria-hidden="true"><use href="#i-file"/></svg></span><div><small id="d9n">Extra bill</small><b id="d9">0</b><i>AED</i></div></div><div class="dc"><span class="ib cr"><svg class="ic " aria-hidden="true"><use href="#i-down"/></svg></span><div><small>To collect</small><b id="d7">0</b><i>AED</i><br><small id="d7s" style="font-weight:500"></small></div></div><div class="dc"><span class="ib c3"><svg class="ic " aria-hidden="true"><use href="#i-up"/></svg></span><div><small>To refund</small><b id="d8">0</b><i>AED</i><br><small id="d8s" style="font-weight:500"></small></div></div></div></div>
+<section class="tab" id="tab1"><div class="th"><button class="thb" data-keep id="th1" onclick="tabClick(1)" aria-expanded="false"><span class="ib "><svg class="ic " aria-hidden="true"><use href="#i-users"/></svg></span><span class="tx"><span class="tt">People</span><span class="td">Add or edit who is in the mess</span></span><span class="ts" id="ts1"></span><svg class="ic chev" aria-hidden="true"><use href="#i-chev"/></svg></button><button class="pin" data-keep id="pin1" onclick="tabPin(1)" title="Pin this tab so it stays open" aria-label="Pin tab 1" aria-pressed="false"><svg class="ic " aria-hidden="true"><use href="#i-pin"/></svg></button></div><div class="tb" id="tb1"><div id="plist" class="plist"></div>
+<p><button class="p" onclick="addM()"><svg class="ic " aria-hidden="true"><use href="#i-plus"/></svg> Add person</button></p><small>Tap a person to edit their mess days, internet and water.</small></div></section>
+<section class="tab" id="tab2"><div class="th"><button class="thb" data-keep id="th2" onclick="tabClick(2)" aria-expanded="false"><span class="ib c2"><svg class="ic " aria-hidden="true"><use href="#i-drop"/></svg></span><span class="tx"><span class="tt">Internet &amp; Water Bill</span><span class="td">Monthly utility bills</span></span><span class="ts" id="ts2"></span><svg class="ic chev" aria-hidden="true"><use href="#i-chev"/></svg></button><button class="pin" data-keep id="pin2" onclick="tabPin(2)" title="Pin this tab so it stays open" aria-label="Pin tab 2" aria-pressed="false"><svg class="ic " aria-hidden="true"><use href="#i-pin"/></svg></button></div><div class="tb" id="tb2"><div class="bills"><div class="bill"><div class="bh"><span class="ib c2"><svg class="ic " aria-hidden="true"><use href="#i-wifi"/></svg></span><div><b>Internet bill</b><small>Shared by net days</small></div></div><div class="bigf"><span>AED</span><input id="net" type="number" step="any" inputmode="decimal" placeholder="0.00" aria-label="Total internet bill in AED"></div><label class="sm">Fixed internet charge per fixed person (AED)<input id="fixednet" type="number" step="any" inputmode="decimal" placeholder="0.00"></label></div>
+<div class="bill"><div class="bh"><span class="ib ct"><svg class="ic " aria-hidden="true"><use href="#i-drop"/></svg></span><div><b>Water bill</b><small>Shared by water days</small></div></div><div class="bigf"><span>AED</span><input id="water" type="number" step="any" inputmode="decimal" placeholder="0.00" aria-label="Total water bill in AED"></div><label class="sm">Fixed water charge per fixed person (AED)<input id="fixed" type="number" step="any" inputmode="decimal"></label></div>
+<div class="bill" id="xbill" style="grid-column:1/-1"><div class="bh"><span class="ib c4"><svg class="ic " aria-hidden="true"><use href="#i-file"/></svg></span><div><b>Extra bill <span style="font-weight:500;color:var(--mu)">(optional)</span></b><small>For example room cleaning. Shared by days, like water.</small></div></div><label class="sm">Bill name<input id="xname" type="text" maxlength="30" autocomplete="off" placeholder="e.g. Room cleaning" aria-label="Extra bill name"></label><div class="bigf"><span>AED</span><input id="xamt" type="number" step="any" inputmode="decimal" placeholder="0.00" aria-label="Extra bill amount in AED"></div><label class="sm">Fixed charge per fixed person (AED)<input id="xfix" type="number" step="any" inputmode="decimal" placeholder="0.00"></label><small class="hint">After you add it, tap a person in the People tab. The bill shows there as one more option: Share, Not used, Fixed or Manual days.</small></div>
+<div class="bill" style="grid-column:1/-1;background:var(--prl);border-color:transparent"><div class="bh"><span class="ib c6"><svg class="ic " aria-hidden="true"><use href="#i-file"/></svg></span><div><b>Total utilities</b><small id="utsub">Internet + Water</small></div></div><div class="bigf"><span>AED</span><b id="utot" style="font-size:30px;letter-spacing:-.02em;color:var(--tx)">0.00</b></div></div></div>
+<p id="uwn" class="wn"></p><small>People set to <b>Fixed</b> pay the fixed charge. The rest of the bill is shared by days among everyone else. By default each person's mess days are used for both internet and water. To change someone, tap them in the People tab. If you add an extra bill, it shows up there as one more option.</small></div></section>
+<section class="tab" id="tab3"><div class="th"><button class="thb" data-keep id="th3" onclick="tabClick(3)" aria-expanded="false"><span class="ib cw"><svg class="ic " aria-hidden="true"><use href="#i-cart"/></svg></span><span class="tx"><span class="tt">Grocery Expenses</span><span class="td">Who bought what</span></span><span class="ts" id="ts3"></span><svg class="ic chev" aria-hidden="true"><use href="#i-chev"/></svg></button><button class="pin" data-keep id="pin3" onclick="tabPin(3)" title="Pin this tab so it stays open" aria-label="Pin tab 3" aria-pressed="false"><svg class="ic " aria-hidden="true"><use href="#i-pin"/></svg></button></div><div class="tb" id="tb3"><div class="kpi"><span>Grand total: <b id="gt">0</b> AED</span></div><div id="pt" class="chps"></div>
+<div id="eb" class="txl"></div><datalist id="rmkl"></datalist>
+<div class="btns"><button class="p" onclick="addE()"><svg class="ic " aria-hidden="true"><use href="#i-plus"/></svg> Add expense</button><button class="p" data-keep onclick="shareExp('s')" style="background:var(--ok);border-color:var(--ok)"><svg class="ic " aria-hidden="true"><use href="#i-share"/></svg> Share image</button><button class="dl" data-keep onclick="shareExp('d')"><svg class="ic " aria-hidden="true"><use href="#i-download"/></svg> Download image</button><button onclick="toggleImp()"><svg class="ic " aria-hidden="true"><use href="#i-download"/></svg> Import</button></div><span class="msg" style="color:var(--mu)"></span> <span id="immsg" class="get"></span>
+<input type="hidden" id="immode" value="e">
+<div id="imp" class="panel" style="display:none">
+<b>Import grocery expenses (Name, Date, Amount, Remark)</b>
+<div class="row" style="margin-top:8px">
+<label>When applying<select id="imhow"><option value="r">Replace existing</option><option value="a">Add to existing</option></select></label>
+<label>Expected total (optional)<input id="imexp" type="number" step="any" oninput="impRender()"></label>
+</div>
+<textarea id="imtxt" class="imtxt" style="height:110px" placeholder="Paste rows here (copy the cells from Excel)&#10;Naveen, 04-Sep, 389.97, Chicken&#10;Anand, 04-Sep, 15.75, Vegetables&#10;Total, , 405.72" oninput="impCheck()"></textarea>
+<p><input type="file" id="imfile" accept=".csv,.tsv,.txt,text/plain,text/csv" onchange="impFile(this)"> <button onclick="impClear()">Clear</button> <button onclick="toggleImp()">Close</button></p>
+<div class="w" id="imout"></div>
+<p><button class="p" id="imapply" onclick="impApply()" disabled>Apply import</button></p>
+<small>Rows are checked before anything changes: bad amounts are skipped, similar names (like Aravindh / Aravinth) are matched for you to confirm, and a "Total" row is used to cross-check the sum.</small>
+</div>
+<p id="ow" class="wn"></p>
+<img id="eimg" alt="Grocery expenses" class="imgs" style="display:none;margin-top:10px">
+<small>Share opens the share sheet of your phone (WhatsApp and other apps). Download saves the picture on your phone. The picture lists every purchase, one per line, with the per-person totals. If saving does not start, long-press the picture.</small></div></section>
+<section class="tab" id="tab4"><div class="th"><button class="thb" data-keep id="th4" onclick="tabClick(4)" aria-expanded="false"><span class="ib c4"><svg class="ic " aria-hidden="true"><use href="#i-wallet"/></svg></span><span class="tx"><span class="tt">Cash Advance</span><span class="td">Cash given to a buyer</span></span><span class="ts" id="ts4"></span><svg class="ic chev" aria-hidden="true"><use href="#i-chev"/></svg></button><button class="pin" data-keep id="pin4" onclick="tabPin(4)" title="Pin this tab so it stays open" aria-label="Pin tab 4" aria-pressed="false"><svg class="ic " aria-hidden="true"><use href="#i-pin"/></svg></button></div><div class="tb" id="tb4"><small>Use this when someone does not buy groceries but gives you cash. Choose who gave it and who is holding it. Their mess bill is checked against the advance in the final bill: they pay the rest if short, or you refund the excess.</small>
+<div id="ab" class="txl" style="margin-top:10px"></div>
+<p><button class="p" onclick="addAdv()"><svg class="ic " aria-hidden="true"><use href="#i-plus"/></svg> Add advance</button></p></div></section>
+<section class="tab" id="tab5"><div class="th"><button class="thb" data-keep id="th5" onclick="tabClick(5)" aria-expanded="false"><span class="ib ct"><svg class="ic " aria-hidden="true"><use href="#i-calc"/></svg></span><span class="tx"><span class="tt">Final Bill</span><span class="td">Each person's final amount</span></span><span class="ts" id="ts5"></span><svg class="ic chev" aria-hidden="true"><use href="#i-chev"/></svg></button><button class="pin" data-keep id="pin5" onclick="tabPin(5)" title="Pin this tab so it stays open" aria-label="Pin tab 5" aria-pressed="false"><svg class="ic " aria-hidden="true"><use href="#i-pin"/></svg></button></div><div class="tb" id="tb5"><div class="row"><label>Bill prepared by<select id="pbsel" data-keep onchange="setPB(this.value)"></select></label></div>
+<div class="kpi"><span>Total person-days: <b id="td">0</b></span><span>Rate per person per day: <b id="rate">0</b> AED</span><span>Net/day: <b id="nr">0</b></span><span>Water/day: <b id="wr">0</b></span><span id="xrk" style="display:none"><i id="xrl" style="font-style:normal">Extra</i>/day: <b id="xr">0</b></span></div>
+<small class="swp">Swipe sideways to see the whole table →</small>
+<div class="w"><table id="rtab"><thead><tr><th>Name</th><th>Mess days</th><th>Net days</th><th>Water days</th><th>Groceries paid</th><th class="cadv">Cash adv.</th><th>Mess bill</th><th>Water</th><th>Net</th><th class="xcol" id="xth">Extra bill</th><th>Balance</th><th>Due</th><th>Extra</th></tr></thead><tbody id="rb"></tbody><tfoot id="rf"></tfoot></table></div>
+<div class="btns"><button id="clrb" onclick="clearMonth()"><svg class="ic " aria-hidden="true"><use href="#i-trash"/></svg> Clear this month</button></div><span class="msg" style="color:var(--mu)"></span></div></section>
+<section class="tab" id="tab6"><div class="th"><button class="thb" data-keep id="th6" onclick="tabClick(6)" aria-expanded="false"><span class="ib c6"><svg class="ic " aria-hidden="true"><use href="#i-image"/></svg></span><span class="tx"><span class="tt">Bill Image</span><span class="td">Share a statement on WhatsApp</span></span><span class="ts" id="ts6"></span><svg class="ic chev" aria-hidden="true"><use href="#i-chev"/></svg></button><button class="pin" data-keep id="pin6" onclick="tabPin(6)" title="Pin this tab so it stays open" aria-label="Pin tab 6" aria-pressed="false"><svg class="ic " aria-hidden="true"><use href="#i-pin"/></svg></button></div><div class="tb" id="tb6"><div class="row"><label>Show bill for<select id="bwho" data-keep onchange="calc()"></select></label></div>
+<div class="btns"><button class="p" data-keep onclick="shareImg('s')"><svg class="ic " aria-hidden="true"><use href="#i-share"/></svg> Share image</button><button class="dl" data-keep onclick="shareImg('d')"><svg class="ic " aria-hidden="true"><use href="#i-download"/></svg> Download image</button></div><span class="msg" style="color:var(--mu)"></span>
+<img id="bimg" alt="Mess bill" class="imgs">
+<small>Pick "Everyone" for the full bill, or one person to make a personal statement for them. You can also long-press (mobile) or right-click the image to save it. Share opens the share sheet of your phone (WhatsApp and other apps). Download saves the picture on your phone. Make the picture again after payments to show PAID / REFUNDED marks.</small></div></section>
+<section class="tab" id="tab7"><div class="th"><button class="thb" data-keep id="th7" onclick="tabClick(7)" aria-expanded="false"><span class="ib c3"><svg class="ic " aria-hidden="true"><use href="#i-checkc"/></svg></span><span class="tx"><span class="tt">Settlement</span><span class="td">Collect, refund and close</span></span><span class="ts" id="ts7"></span><svg class="ic chev" aria-hidden="true"><use href="#i-chev"/></svg></button><button class="pin" data-keep id="pin7" onclick="tabPin(7)" title="Pin this tab so it stays open" aria-label="Pin tab 7" aria-pressed="false"><svg class="ic " aria-hidden="true"><use href="#i-pin"/></svg></button></div><div class="tb" id="tb7"><div class="ss"><div class="sc sr"><small>TO COLLECT</small><b id="sc1">0</b><i>AED</i></div><div class="sc sg"><small>TO REFUND</small><b id="sc2">0</b><i>AED</i></div><div class="sc sb"><small>BILLS TO PAY</small><b id="sc3">0</b><i>AED</i></div><div class="sc sw" id="sc4c"><small>MONTH STATUS</small><b id="sc4">Open</b></div></div>
+<div class="step"><div class="sh"><span class="ib cr"><svg class="ic " aria-hidden="true"><use href="#i-down"/></svg></span><b>1 · Collect from people</b><span class="bd n" id="b1" style="margin-left:auto"></span></div><div class="mbar"><span>COPY-PASTE MESSAGE FOR EVERYONE</span><button data-keep onclick="reqAll()"><svg class="ic " aria-hidden="true"><use href="#i-copy"/></svg> Request for all</button><button data-keep onclick="rcvAll()"><svg class="ic " aria-hidden="true"><use href="#i-thumb"/></svg> Received confirmation for all</button></div><div id="cl" class="txl"></div><div class="kpi"><span>To collect: <b id="ct">0</b></span><span>Collected: <b id="cc">0</b></span><span>Pending: <b id="cp">0</b></span><span id="ok" class="get"></span></div></div>
+<div class="step"><div class="sh"><span class="ib c3"><svg class="ic " aria-hidden="true"><use href="#i-up"/></svg></span><b>2 · Refund (after all collected)</b><span class="bd n" id="b2" style="margin-left:auto"></span></div><div class="mbar"><span>COPY-PASTE MESSAGE FOR EVERYONE</span><button data-keep onclick="refAll()"><svg class="ic " aria-hidden="true"><use href="#i-copy"/></svg> Refund information for all</button><button data-keep onclick="rfdAll()"><svg class="ic " aria-hidden="true"><use href="#i-check"/></svg> Refunded confirmation for all</button></div><div id="po" class="txl"></div><div class="kpi"><span>Refunded: <b id="rc">0</b></span><span>Pending: <b id="rp">0</b></span><span id="ok2" class="get"></span></div></div>
+<div class="step"><div class="sh"><span class="ib c6"><svg class="ic " aria-hidden="true"><use href="#i-file"/></svg></span><b id="st3">3 · Pay the bills (water &amp; net)</b><span class="bd n" id="b3" style="margin-left:auto"></span></div><div class="mbar"><span>PAYMENT DONE / BILL PAID UPDATE</span><button data-keep onclick="bilAll()"><svg class="ic " aria-hidden="true"><use href="#i-check"/></svg> Bill paid update for all</button></div><div id="bl" class="txl"></div><div class="kpi"><span>Bills paid: <b id="bpd">0</b> of <b id="bto">0</b> AED</span><span>Cash in hand: <b id="cih">0</b> AED</span><span id="ok3" class="get"></span></div></div>
+<div class="step"><div class="sh"><span class="ib cw"><svg class="ic " aria-hidden="true"><use href="#i-clock"/></svg></span><b>Payment status</b><span class="bd n" id="b4" style="margin-left:auto"></span></div><div id="pstat"></div><p id="cs" class="csn"></p></div>
+<div class="step"><div class="sh"><span class="ib c2"><svg class="ic " aria-hidden="true"><use href="#i-msg"/></svg></span><b>Full WhatsApp update</b><span class="bd n" id="b5" style="margin-left:auto"></span></div><textarea id="sum" readonly style="height:230px"></textarea><div class="btns"><button class="p" data-keep onclick="copySum()"><svg class="ic " aria-hidden="true"><use href="#i-copy"/></svg> Copy full update</button><button onclick="resetTicks()"><svg class="ic " aria-hidden="true"><use href="#i-refresh"/></svg> Reset all ticks (new month)</button></div><span class="msg" style="color:var(--mu)"></span><small>Collect, refund and bills in one message, with what is still pending at the end. It refreshes by itself. To change the wording of any message, open Settings and choose Messages. Cash in hand = collected - refunded - bills paid, so it is 0.00 when everything is closed.</small></div>
+<div class="step"><div class="sh"><span class="ib c4"><svg class="ic " aria-hidden="true"><use href="#i-lock"/></svg></span><b>Close the month</b><span class="bd n" id="b6" style="margin-left:auto"></span></div><div id="closebox"></div></div>
+</div></section>
+</main>
+<div id="setm" class="mod sheetm" style="display:none" onclick="if(event.target==this)closeSet()"><div class="box big" role="dialog" aria-modal="true" aria-label="Settings">
+<div class="sh0"><b>Settings</b><button class="x" onclick="closeSet()" aria-label="Close settings"><svg class="ic " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+<div class="sgr"><div class="sgt">APP / MESS</div><label>Mess name (shown on the app and on the images)<input id="messin2" type="text" maxlength="30" placeholder="e.g. UAE MESS" oninput="setMess(this.value,this)"></label></div>
+<div class="sgr"><div class="sgt">MESSAGES (COPY &amp; PASTE TEXTS)</div>
+<small class="hint" style="margin:0 0 8px">Names, amounts and months are filled in by the app. You only change the words around them. Tap a tag to add it where your cursor is. Your "Prepared by" signature is added at the end of every message.</small>
+<label>Message to edit<select id="tpsel" onchange="tplPick()" aria-label="Message to edit"></select></label>
+<div id="tpf"></div>
+<div id="tpc" class="tpc"></div>
+<small class="hint" id="tptip"></small>
+<div class="sgt" style="margin:12px 0 4px" id="tpsrc">PREVIEW</div>
+<div id="tppv" class="pv" aria-live="polite"></div>
+<div class="btns" style="margin:6px 0 0"><button onclick="tplReset()">Reset this message</button><button id="tprall" onclick="tplResetAll()">Reset all messages</button></div></div>
+<div class="sgr"><div class="sgt">DATA</div><div class="btns" style="margin-top:0"><button onclick="backupCopy()"><svg class="ic " aria-hidden="true"><use href="#i-copy"/></svg> Copy Backup</button><button onclick="toggleRst()"><svg class="ic " aria-hidden="true"><use href="#i-upload"/></svg> Restore</button><button onclick="backupNow()"><svg class="ic " aria-hidden="true"><use href="#i-download"/></svg> Save backup file</button></div>
+<div id="bkmsg" class="get" style="min-height:1em"></div>
+<div id="rst" class="panel" style="display:none">
+<b>Restore from a backup</b>
+<p style="margin:8px 0"><input type="file" id="rfile" accept=".json,application/json,text/plain" onchange="rstFile(this)"></p>
+<textarea id="rtxt" style="height:80px" placeholder="...or paste the backup text here" oninput="rstCheck()"></textarea>
+<div class="w" id="rout"></div>
+<div class="row" style="margin-top:8px"><label>How to restore<select id="rhow" onchange="rstRender()"><option value="m">Merge - keep the newest version of each month</option><option value="r">Replace everything on this device</option></select></label><label id="rpwl" style="display:none">Password (needed to replace)<input type="password" id="rpw" autocomplete="off"></label></div>
+<p><button class="p" id="rapply" onclick="rstApply()" disabled>Restore</button> <button onclick="toggleRst()">Close</button></p>
+<small>Merge adds months that are new and updates months that are older here. Closed months on this device are never changed by a merge.</small>
+</div></div>
+<div class="sgr"><div class="sgt">ABOUT</div><div class="abt"><img id="logoimg2" class="logo big" alt="NK MessMate logo"><div><b style="font-size:17px">NK MessMate</b><br><span style="color:var(--mu);font-style:italic">Your Mess • My Mate</span></div></div>
+<div class="kv"><span>Application</span><b>NK MessMate</b></div><div class="kv"><span>Version</span><b id="appv"></b></div><div class="kv" id="bldrow" style="display:none"><span>Phone app build</span><b id="bldv"></b></div><div class="kv" id="srcrow" style="display:none"><span>App source</span><b id="srcv"></b></div><div class="kv"><span>Created by</span><b>Naveenkumar</b></div></div>
+<div class="sgr"><div class="sgt">UPDATE</div><div class="upbtns"><button class="p" id="updbtn" onclick="checkUpdate()"><svg class="ic " aria-hidden="true"><use href="#i-refresh"/></svg> Check for Update</button><button class="p" id="updgo" onclick="applyUpdate()" style="display:none"><svg class="ic " aria-hidden="true"><use href="#i-refresh"/></svg> Update now</button><a class="lnkb" id="updlnk" href="https://github.com/naveenkumarsankar99-oss/nk-messmate/releases/latest" target="_blank" rel="noopener" style="display:none"><svg class="ic " aria-hidden="true"><use href="#i-refresh"/></svg> Download new app file</a></div><div id="upmsg" class="upmsg" role="status" aria-live="polite"></div><div class="hint upnotes" id="upnotes" style="display:none"></div><small class="hint" id="updhint"></small><button id="updreset" class="upreset" onclick="resetBuiltin()" style="display:none">Use the built-in version</button></div>
+</div></div>
+<div id="pem" class="mod sheetm" style="display:none" onclick="if(event.target==this)pdCancel()"><div class="box big pe" role="dialog" aria-modal="true" aria-label="Edit person">
+<div class="sh0"><b id="pet">Edit person</b><button class="x" onclick="pdCancel()" aria-label="Close"><svg class="ic " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+<label>Name<input id="pe_n" type="text" maxlength="30" autocomplete="off" onkeydown="if(event.key=='Enter')pdSave()"></label>
+<label>Mess days <small id="pe_max"></small><input id="pe_d" type="number" min="0" step="1" inputmode="numeric" oninput="pdDays('pe_d','mess days')"></label>
+<div class="sgr"><div class="sgt">INTERNET</div><div class="seg" id="pe_im" role="group" aria-label="Internet"><button data-v="u" onclick="pdSet('im','u')">Used</button><button data-v="n" onclick="pdSet('im','n')">Not used</button><button data-v="f" onclick="pdSet('im','f')">Fixed</button><button data-v="m" onclick="pdSet('im','m')">Manual days</button></div>
+<div id="pe_ni" style="display:none"><label>Internet days<input id="pe_nd" type="number" min="0" step="1" inputmode="numeric" oninput="pdDays('pe_nd','internet days')"></label></div><small class="hint" id="pe_ih"></small></div>
+<div class="sgr"><div class="sgt">WATER</div><div class="seg" id="pe_wm" role="group" aria-label="Water"><button data-v="s" onclick="pdSet('wm','s')">Share</button><button data-v="n" onclick="pdSet('wm','n')">Not used</button><button data-v="f" onclick="pdSet('wm','f')">Fixed</button><button data-v="m" onclick="pdSet('wm','m')">Manual days</button></div>
+<div id="pe_nw" style="display:none"><label>Water days<input id="pe_wd" type="number" min="0" step="1" inputmode="numeric" oninput="pdDays('pe_wd','water days')"></label></div><small class="hint" id="pe_wh"></small></div>
+<div class="sgr" id="pe_xs" style="display:none"><div class="sgt" id="pe_xt">EXTRA BILL</div><div class="seg" id="pe_xm" role="group" aria-label="Extra bill"><button data-v="s" onclick="pdSet('xm','s')">Share</button><button data-v="n" onclick="pdSet('xm','n')">Not used</button><button data-v="f" onclick="pdSet('xm','f')">Fixed</button><button data-v="m" onclick="pdSet('xm','m')">Manual days</button></div><div id="pe_nx" style="display:none"><label>Days<input id="pe_xd" type="number" min="0" step="1" inputmode="numeric" oninput="pdDays('pe_xd','these days')"></label></div><small class="hint" id="pe_xh"></small></div>
+<p id="pe_msg" class="wn" style="min-height:1.2em;margin:10px 0 0"></p>
+<div class="btns"><button class="p" onclick="pdSave()"><svg class="ic " aria-hidden="true"><use href="#i-check"/></svg> Save</button><button onclick="pdCancel()">Cancel</button><button id="pe_del" onclick="pdDel()" style="margin-left:auto;color:var(--bad)"><svg class="ic " aria-hidden="true"><use href="#i-trash"/></svg> Remove</button></div>
+</div></div>
+<div id="pwm" class="mod" style="display:none" onclick="if(event.target==this)pwCancel()"><div class="box" role="dialog" aria-modal="true">
+<h2 id="pwt" style="margin:0 0 6px"></h2><p id="pwd" style="color:var(--mu);margin:0 0 10px;font-size:13px"></p>
+<label id="l1"><span id="l1t"></span><input type="password" id="p1" autocomplete="off" onkeydown="pwKey(event)"></label>
+<label id="l2"><span id="l2t"></span><input type="password" id="p2" autocomplete="off" onkeydown="pwKey(event)"></label>
+<label id="l3"><span id="l3t"></span><input type="password" id="p3" autocomplete="off" onkeydown="pwKey(event)"></label>
+<p id="pwe" class="pay" style="min-height:1.2em;margin:4px 0"></p>
+<p style="margin:0"><button class="p" id="pwok" onclick="pwOk()">OK</button> <button onclick="pwCancel()">Cancel</button></p>
+</div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+const $=id=>document.getElementById(id);
+const LOGO_SRC="data:image/webp;base64,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";
+const f=n=>(Math.round(n*100)/100).toFixed(2);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ic=(n,c)=>`<svg class="ic ${c||""}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+const avc=n=>{let h=0;for(const ch of String(n))h=(h*31+ch.charCodeAt(0))>>>0;return "a"+(h%4)};
+const ini=n=>(String(n).trim()[0]||"?").toUpperCase();
+const av=n=>`<span class="av ${avc(n)}">${esc(ini(n))}</span>`;
+let D=[],E=[],R=[],BC=null,EC=null,BL=[],CLOSED=false,IM={rows:[],tot:null,mode:"e"};
+/* ---------- months, dates ---------- */
+const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],MF=["January","February","March","April","May","June","July","August","September","October","November","December"],WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const p2=n=>String(n).padStart(2,"0"),mkey=(y,m)=>y+"-"+p2(m+1),ky=k=>+k.slice(0,4),km=k=>+k.slice(5,7)-1;
+const mlabel=k=>MF[km(k)]+" "+ky(k),mshort=k=>MN[km(k)]+" "+ky(k),dim=k=>new Date(ky(k),km(k)+1,0).getDate();
+const addMon=(k,n)=>{const d=new Date(ky(k),km(k)+n,1);return mkey(d.getFullYear(),d.getMonth())};
+const todayKey=()=>{const t=new Date();return mkey(t.getFullYear(),t.getMonth())};
+const ML=()=>mlabel(CUR);
+function fmtD(v){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||"");return m?m[3]+"-"+MN[+m[2]-1]:(v||"")}
+function isoOf(y,mo,d){const dt=new Date(y,mo,d);return dt.getMonth()!=mo||dt.getDate()!=d?{iso:"",ok:false}:{iso:mkey(y,mo)+"-"+p2(d),ok:true}}
+function parseDate(str,key){const t=String(str||"").trim();if(!t)return{iso:"",ok:true};let m,d,mo,y;
+if(m=/^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(t))return isoOf(+m[1],+m[2]-1,+m[3]);
+const mi=w=>MN.findIndex(x=>x.toLowerCase()==w.slice(0,3).toLowerCase());
+if(m=/^(\d{1,2})[\s\-\/\.]+([A-Za-z]{3,})\.?(?:[\s\-\/\.,]+(\d{2,4}))?$/.exec(t)){d=+m[1];mo=mi(m[2]);y=m[3]}
+else if(m=/^([A-Za-z]{3,})\.?[\s\-\/\.]+(\d{1,2})(?:[\s\-\/\.,]+(\d{2,4}))?$/.exec(t)){mo=mi(m[1]);d=+m[2];y=m[3]}
+else if(m=/^(\d{1,2})[\/\-\.](\d{1,2})(?:[\/\-\.](\d{2,4}))?$/.exec(t)){d=+m[1];mo=+m[2]-1;y=m[3]}
+else return{iso:"",ok:false};
+if(mo<0||mo>11||d<1||d>31)return{iso:"",ok:false};
+if(y){y=+y;if(y<100)y+=2000}else{const base=ky(key)*12+km(key);let best=ky(key),bd=1e9;[ky(key)-1,ky(key),ky(key)+1].forEach(yy=>{const dd=Math.abs(yy*12+mo-base);if(dd<bd){bd=dd;best=yy}});y=best}
+return isoOf(y,mo,d)}
+function dateOpts(sel){
+const og=(label,k,from,to)=>{let h=`<optgroup label="${esc(label)}">`;for(let d=from;d<=to;d++){const v=k+"-"+p2(d),w=WD[new Date(ky(k),km(k),d).getDay()];h+=`<option value="${v}" ${v==sel?"selected":""}>${p2(d)} ${MN[km(k)]} · ${w}</option>`}return h+"</optgroup>"};
+const nx=addMon(CUR,1),pv=addMon(CUR,-1),body=og(mlabel(CUR),CUR,1,dim(CUR))+og("Next month ("+mshort(nx)+")",nx,1,5)+og("Previous month ("+mshort(pv)+")",pv,dim(pv)-6,dim(pv));
+const extra=sel&&!body.includes(`value="${sel}"`)?`<option value="${esc(sel)}" selected>${esc(fmtD(sel))}</option>`:"";
+return `<option value="">Select date</option>`+extra+body}
+
+/* ---------- storage: one record per month ---------- */
+const LS="messbill4";
+let ALL={},CUR="",S=null,SIG="",DB=null,DIRTY=new Set(),TMR=null,WRITING=false,LOCKCFG=null;
+const APPV="23",REL_URL="https://github.com/naveenkumarsankar99-oss/nk-messmate/releases/latest",LIVE="https://raw.githubusercontent.com/naveenkumarsankar99-oss/nk-messmate-live/main/";
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+const APP_BUILD=lsGet("nkmm_build")||"",IN_APP=/^\d+$/.test(APP_BUILD);let UPD=null,RSTARM=false;let APP={mess:"UAE MESS",pb:"",u:0,tpl:{}},BCUR=null,PC=null;
+function cleanApp(x){x=x||{};const t={};if(x.tpl&&typeof x.tpl==="object")Object.keys(x.tpl).forEach(k=>{if(Object.prototype.hasOwnProperty.call(TD,k)&&typeof x.tpl[k]==="string"&&x.tpl[k]!==TD[k])t[k]=x.tpl[k].slice(0,2000)});return{mess:typeof x.mess==="string"?x.mess.slice(0,30):"UAE MESS",pb:typeof x.pb==="string"?x.pb.slice(0,40):"",u:+x.u||0,tpl:t}}
+const newMonth=()=>({r:{},f:{},bp:{},water:0,fixed:10,fixedNet:0,net:0,xn:"",xa:0,xf:0,m:[],e:[],adv:[],lock:false,lockAt:0,u:0});
+const isEmpty=x=>!x.m.length&&!x.e.length&&!(x.adv&&x.adv.length)&&!x.water&&!x.net&&!x.xa;
+const sigOf=x=>JSON.stringify([x.r,x.f,x.bp,x.water,x.fixed,x.fixedNet||0,x.net,x.xn||"",x.xa||0,x.xf||0,x.m,x.e,x.adv||[],!!x.lock]);
+function norm(x){x=x||{};return{r:x.r||{},f:x.f||{},bp:x.bp||{},water:+x.water||0,fixed:x.fixed==null?10:+x.fixed,fixedNet:+x.fixedNet||0,net:+x.net||0,xn:String(x.xn||"").slice(0,30),xa:+x.xa||0,xf:+x.xf||0,m:Array.isArray(x.m)?x.m:[],e:Array.isArray(x.e)?x.e:[],adv:Array.isArray(x.adv)?x.adv:[],gt:x.gt,cl:x.cl,lock:!!x.lock,lockAt:+x.lockAt||0,u:+x.u||0}}
+function lsLoad(){let cur="";try{const r=localStorage.getItem(LS);
+if(r){const o=JSON.parse(r);cur=o.cur||"";if(o.app)APP=cleanApp(o.app);if(o.lock&&o.lock.h&&o.lock.s)LOCKCFG={s:String(o.lock.s),h:String(o.lock.h),u:+o.lock.u||0};Object.keys(o.months||{}).forEach(k=>{if(/^\d{4}-\d{2}$/.test(k))ALL[k]=norm(o.months[k])})}
+else{const g=localStorage.getItem("messbill3");if(g){const o=JSON.parse(g);let k="2026-09";const mm=/([A-Za-z]+)\s+(\d{4})/.exec(o.month||"");
+if(mm){const i=MN.findIndex(x=>x.toLowerCase()==mm[1].slice(0,3).toLowerCase());if(i>=0)k=mkey(+mm[2],i)}
+const x=norm(o);x.u=1;x.e.forEach(e=>{const q=parseDate(e.dt,k);if(q.ok&&q.iso)e.dt=q.iso});if(!isEmpty(x)){ALL[k]=x;cur=k}}}}catch(e){}
+return cur}
+function lsSave(){try{localStorage.setItem(LS,JSON.stringify({cur:CUR,months:ALL,lock:LOCKCFG,app:APP}))}catch(e){}}
+function loadCur(k){CUR=k;S=ALL[k]||newMonth();SIG=sigOf(S)}
+function setSync(t){const e=$("sync");if(e)e.textContent=t}
+function persist(){const sg=sigOf(S);if(sg===SIG)return;SIG=sg;
+if(isEmpty(S))delete ALL[CUR];else{S.u=Date.now();ALL[CUR]=S}
+lsSave();dbQueue(CUR);renderHist()}
+function dbQueue(k){if(!DB){setSync("💾 This browser only");return}DIRTY.add(k);clearTimeout(TMR);setSync("Saving…");TMR=setTimeout(dbFlush,700)}
+async function dbFlush(){if(!DB||WRITING||!DIRTY.size)return;WRITING=true;const keys=[...DIRTY];DIRTY.clear();
+try{for(const k of keys){const ref=DB.doc("months/"+k);if(ALL[k])await ref.set(JSON.parse(JSON.stringify(ALL[k])));else await ref.delete()}setSync("☁ Synced")}
+catch(e){keys.forEach(k=>DIRTY.add(k));setSync("⚠ Not synced (saved in this browser)");clearTimeout(TMR);TMR=setTimeout(dbFlush,15000)}
+WRITING=false;if(DIRTY.size){clearTimeout(TMR);TMR=setTimeout(dbFlush,700)}}
+function remoteApply(k,r){const l=ALL[k];if(l&&r.u<=l.u)return false;ALL[k]=r;
+if(k==CUR&&!DIRTY.size&&!WRITING){loadCur(k);init()}renderHist();lsSave();return true}
+async function dbInit(){try{DB=window.claude&&claude.use?await claude.use("db"):null}catch(e){DB=null}
+if(!DB){setSync("💾 This browser only");return}
+try{const qs=await DB.collection("months").get(),seen={};
+qs.docs.forEach(d=>{const k=d.id,x=d.data();if(!x||!/^\d{4}-\d{2}$/.test(k))return;seen[k]=+x.u||0;remoteApply(k,norm(x))});
+try{const ls=await DB.doc("settings/lock").get();if(ls.exists){const x=ls.data();if(x&&x.h&&x.s&&(!LOCKCFG||(+x.u||0)>(+LOCKCFG.u||0))){LOCKCFG={s:String(x.s),h:String(x.h),u:+x.u||0};lsSave()}}else if(LOCKCFG)dbPutLock()}catch(e){}
+try{const as=await DB.doc("settings/app").get();if(as.exists){const x=as.data();if(x&&(+x.u||0)>APP.u){APP=cleanApp(x);lsSave();updMess();fillPB();calc()}}else if(APP.u)dbPutApp()}catch(e){}
+Object.keys(ALL).forEach(k=>{if(!(k in seen)||seen[k]<ALL[k].u)DIRTY.add(k)});
+if(DIRTY.size)dbFlush();else setSync("☁ Synced");
+DB.collection("months").onSnapshot(sn=>{sn.docChanges().forEach(c=>{const k=c.doc.id;if(!/^\d{4}-\d{2}$/.test(k))return;
+if(c.type=="removed"){if(ALL[k]&&!DIRTY.has(k)){delete ALL[k];if(k==CUR){loadCur(k);init()}renderHist();lsSave()}}
+else{const x=c.doc.data();if(x)remoteApply(k,norm(x))}})},()=>{})}
+catch(e){setSync("⚠ Not synced (saved in this browser)")}}
+
+/* ---------- month navigation ---------- */
+function buildNav(){let h="";MF.forEach((n,i)=>h+=`<option value="${i}">${n}</option>`);$("selm").innerHTML=h;
+h="";for(let y=2024;y<=2035;y++)h+=`<option value="${y}">${y}</option>`;$("sely").innerHTML=h}
+function monLabel(){return window.innerWidth<480?mshort(CUR):mlabel(CUR)}
+window.addEventListener("resize",()=>{try{$("monl").textContent=monLabel()+(S.lock?" 🔒":"")}catch(e){}});
+function monToggle(){const d=$("navc");d.style.display=d.style.display=="none"?"block":"none"}
+function monClose(){$("navc").style.display="none"}
+document.addEventListener("click",e=>{const n=$("navc");if(n&&n.style.display!="none"&&!e.target.closest("#navc,#monb"))monClose()});
+document.addEventListener("click",e=>{const p=$("navc");if(p.style.display!="none"&&!p.contains(e.target)&&!e.target.closest("#monb"))monClose()});
+function updateNav(){$("monl").textContent=monLabel();$("selm").value=String(km(CUR));$("sely").value=String(ky(CUR))}
+function pickMon(){monClose();openMonth(mkey(+$("sely").value,+$("selm").value))}
+function stepMon(n){openMonth(addMon(CUR,n))}
+function openMonth(k){if(k==CUR){updateNav();return}persist();loadCur(k);lsSave();
+IM={rows:[],tot:null,mode:"e"};$("imtxt").value="";impRender();$("imp").style.display="none";$("eimg").style.display="none";$("immsg").textContent="";
+init();renderHist();try{window.scrollTo(0,0)}catch(e){}}
+function renderHist(){const ks=Object.keys(ALL).filter(k=>!isEmpty(ALL[k])).sort().reverse();
+$("hist").innerHTML=ks.length?ks.map(k=>{const x=ALL[k],g=x.e.reduce((a,y)=>a+y.a,0);return `<button class="chip ${k==CUR?"on":""}" onclick="openMonth('${k}');monClose()"><b>${mshort(k)}</b><span>${f(g)} AED · ${x.m.length} people${x.lock?" · 🔒 closed":x.cl?" · ✓ settled":""}</span></button>`}).join(""):'<span style="color:var(--mu)">No saved bills yet. Pick a month above and start entering.</span>'}
+function prevWithPeople(){return Object.keys(ALL).filter(k=>k<CUR&&ALL[k].m.length).sort().pop()||""}
+function copyPeople(){if(lk())return;const k=prevWithPeople();if(!k)return;const src=ALL[k],d=dim(CUR);
+S.m=src.m.map(p=>mkP(p.n,d,imOf(p)=="n"?"n":imOf(p)=="f"?"f":"u",wmOf(p)=="f"?"f":wmOf(p)=="n"?"n":"s",d,d,xmOf(p)=="f"?"f":xmOf(p)=="n"?"n":"s",d));S.fixed=src.fixed;S.fixedNet=src.fixedNet||0;S.xn=src.xn||"";S.xf=src.xf||0;init()}
+let CLR=0;function clearMonth(){if(lk())return;const b=$("clrb");
+if(!CLR){CLR=1;b.textContent="Tap again to clear "+mshort(CUR);setTimeout(()=>{CLR=0;b.textContent="🗑 Clear this month"},3500);return}
+CLR=0;b.textContent="🗑 Clear this month";S.r={};S.f={};S.bp={};S.water=0;S.fixed=10;S.fixedNet=0;S.net=0;S.xn="";S.xa=0;S.xf=0;S.m=[];S.e=[];S.adv=[];init()}
+
+function init(){updateNav();updMess();$("water").value=S.water||"";$("fixed").value=S.fixed;$("fixednet").value=S.fixedNet||"";$("net").value=S.net||"";$("xname").value=S.xn||"";$("xamt").value=S.xa||"";$("xfix").value=S.xf||"";draw()}
+function lk(){if(S.lock){note("🔒 This month is closed. Tap Unlock to edit.");return true}return false}
+[["water","water"],["fixed","fixed"],["net","net"],["fixednet","fixedNet"],["xamt","xa"],["xfix","xf"]].forEach(a=>$(a[0]).addEventListener("input",()=>{if(S.lock)return;S[a[1]]=+$(a[0]).value||0;calc()}));
+$("xname").addEventListener("input",()=>{if(S.lock)return;S.xn=$("xname").value.slice(0,30);calc()});
+function addM(){if(lk())return;pdOpen(-1)}
+function addE(){if(lk())return;const last=S.e.length?S.e[S.e.length-1].dt:"",t=new Date(),dd=last||(todayKey()==CUR?CUR+"-"+p2(t.getDate()):"");S.e.push({n:S.m[0]?S.m[0].n:"",dt:dd,a:0,r:""});draw()}
+function delM(i){if(lk())return;S.m.splice(i,1);draw()}
+function delE(i){if(lk())return;S.e.splice(i,1);draw()}
+function addAdv(){if(lk())return;const pt={};S.e.forEach(x=>pt[x.n]=(pt[x.n]||0)+x.a);const la=S.adv[S.adv.length-1],top=Object.keys(pt).sort((a,b)=>pt[b]-pt[a])[0]||(S.m[0]?S.m[0].n:""),t=la?la.t:top,g=(S.m.find(p=>p.n!=t)||{n:""}).n,last=la?la.dt:(S.e.length?S.e[S.e.length-1].dt:""),tt=new Date(),dd=last||(todayKey()==CUR?CUR+"-"+p2(tt.getDate()):"");S.adv.push({f:g,t,dt:dd,a:0});draw()}
+function delAdv(i){if(lk())return;S.adv.splice(i,1);draw()}
+function setAdv(i,k,v,rd){if(lk())return;S.adv[i][k]=v;rd?draw():calc()}
+const imOf=p=>p.im||(p.man?(p.nd>0?"m":"n"):(p.net?"u":"n"));
+const wmOf=p=>p.wm||(p.fx?"f":(p.man?(p.wd>0?"m":"n"):"s"));
+const xmOf=p=>p.xm||"s";
+const xe=p=>{const m=xmOf(p);return m=="s"?p.d:m=="m"?(+p.xd||0):0};
+const xLab=()=>(S.xn||"").trim()||"Extra bill";
+const xShow=()=>S.xa>0||!!(S.xn||"").trim();
+function bilNames(){const a=["water","net"];if(S.xa>0)a.push(xLab().toLowerCase());return a.slice(0,-1).join(", ")+" & "+a[a.length-1]}
+function eff(p){const i=imOf(p),w=wmOf(p);return{nd:i=="u"?p.d:i=="m"?p.nd:0,wd:w=="s"?p.d:w=="m"?p.wd:0}}
+function mkP(n,d,im,wm,nd,wd,xm,xd){const e={nd:im=="u"?d:im=="m"?nd:0,wd:wm=="s"?d:wm=="m"?wd:0};const o={n,d,im,wm,nd:im=="f"?d:e.nd,wd:wm=="f"?d:e.wd,net:im!="n",fx:wm=="f",man:im=="m"||wm=="m"||wm=="n"};if(xm){o.xm=xm;o.xd=xm=="m"?xd:d}return o}
+function setM(i,k,v,redraw){if(lk())return;const o=S.m[i];if(k=="n"){S.e.forEach(x=>{if(x.n==o.n)x.n=v});S.adv.forEach(x=>{if(x.f==o.n)x.f=v;if(x.t==o.n)x.t=v})}if(k=="man"&&v){const e=eff(o);o.nd=e.nd;o.wd=o.fx?o.d:e.wd}o[k]=v;redraw?draw():calc()}
+function setE(i,k,v,rd){if(lk())return;S.e[i][k]=v;rd?draw():calc()}
+let PE=null;
+function pdOpen(i){if(lk())return;const mx=dim(CUR);let q;
+if(i<0)q={n:"",d:mx,im:"u",wm:"s",nd:mx,wd:mx,xm:"s",xd:mx};else{const o=S.m[i],e=eff(o);q={n:o.n,d:o.d,im:imOf(o),wm:wmOf(o),nd:e.nd||o.d,wd:e.wd||o.d,xm:xmOf(o),xd:xmOf(o)=="m"?(o.xd||0):o.d}}
+PE={i,im:q.im,wm:q.wm,xm:q.xm,cf:0};$("pet").textContent=i<0?"Add person":"Edit person";$("pe_n").value=q.n;$("pe_d").value=q.d;$("pe_nd").value=q.nd;$("pe_wd").value=q.wd;$("pe_xd").value=q.xd;
+$("pe_max").textContent="(0 to "+mx+" - "+MF[km(CUR)]+")";$("pe_del").style.display=i<0?"none":"";$("pe_del").lastChild.textContent=" Remove";$("pe_msg").textContent="";pdSeg();$("pem").style.display="flex";
+if(i<0)setTimeout(()=>{try{$("pe_n").focus()}catch(e){}},60)}
+function pdSet(k,v){if(!PE)return;PE[k]=v;pdSeg()}
+function pdSeg(){[["im","pe_im","pe_ni"],["wm","pe_wm","pe_nw"],["xm","pe_xm","pe_nx"]].forEach(a=>{document.querySelectorAll("#"+a[1]+" button").forEach(b=>{const on=b.dataset.v==PE[a[0]];b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)});$(a[2]).style.display=PE[a[0]]=="m"?"block":"none"});
+$("pe_ih").textContent={u:"Internet days = Mess days (shared internet bill)",n:"No internet charge for this person",f:S.fixedNet>0?"Fixed internet charge of "+f(S.fixedNet)+" AED":"Fixed internet charge: set the amount in the Internet & Water tab",m:"Enter the exact internet days (shared internet bill)"}[PE.im];
+$("pe_wh").textContent={s:"Water days = Mess days (shared water bill)",n:"No water charge for this person",f:"Fixed water charge of "+f(S.fixed)+" AED",m:"Enter the exact water days (shared water bill)"}[PE.wm];
+{const xs=xShow();$("pe_xs").style.display=xs?"block":"none";$("pe_xt").textContent=xLab().toUpperCase();$("pe_xh").textContent={s:"Days = Mess days (shared bill)",n:"No charge for this person",f:S.xf>0?"Fixed charge of "+f(S.xf)+" AED":"Fixed charge: set the amount in the Internet & Water tab",m:"Enter the exact days (shared bill)"}[PE.xm]||""}}
+function pdDays(id,lab){const mx=dim(CUR),el=$(id);if(el.value==="")return;const v=+el.value;if(v>mx){el.value=mx;$("pe_msg").textContent=MF[km(CUR)]+" "+ky(CUR)+" has only "+mx+" days, so "+lab+" can be at most "+mx+"."}else if(v<0){el.value=0}else{$("pe_msg").textContent=""}}
+function pdClose(){$("pem").style.display="none";PE=null}
+function pdCancel(){pdClose()}
+function pdSave(){if(lk()||!PE)return;const mx=dim(CUR),n=$("pe_n").value.trim(),msg=t=>{$("pe_msg").textContent=t};
+if(!n){msg("Please enter a name.");return}
+if(S.m.some((q,k)=>k!=PE.i&&q.n.toLowerCase()==n.toLowerCase())){msg(n+" is already in the list.");return}
+const gv=id=>Math.min(mx,Math.max(0,Math.floor(+$(id).value||0)));
+const np=mkP(n,gv("pe_d"),PE.im,PE.wm,gv("pe_nd"),gv("pe_wd"),PE.xm,gv("pe_xd"));
+if(PE.i<0)S.m.push(np);else{const o=S.m[PE.i];if(o.n!=n){S.e.forEach(x=>{if(x.n==o.n)x.n=n});S.adv.forEach(x=>{if(x.f==o.n)x.f=n;if(x.t==o.n)x.t=n})}S.m[PE.i]=np}
+pdClose();draw()}
+function pdDel(){if(lk()||!PE||PE.i<0)return;if(!PE.cf){PE.cf=1;$("pe_del").lastChild.textContent=" Tap again to remove";return}S.m.splice(PE.i,1);pdClose();draw()}
+function draw(){
+/* people list is drawn in calc() */
+const opts=n=>S.m.map(p=>`<option ${p.n==n?"selected":""}>${esc(p.n)}</option>`).join("");
+$("eb").innerHTML=S.e.length?S.e.map((x,i)=>`<div class="gx"><select class="payer" aria-label="Paid by" onchange="setE(${i},'n',this.value)">${opts(x.n)}</select><select class="gdt" aria-label="Date" onchange="setE(${i},'dt',this.value)">${dateOpts(x.dt)}</select><input class="rmk" type="text" maxlength="80" list="rmkl" autocomplete="off" placeholder="Remark (optional)" aria-label="Remark" value="${esc(x.r||"")}" oninput="setE(${i},'r',this.value.slice(0,80))"><label class="amt">AED<input type="number" step="any" inputmode="decimal" value="${x.a}" aria-label="Amount" oninput="setE(${i},'a',+this.value||0)"></label><button class="x" onclick="delE(${i})" aria-label="Remove expense" title="Remove">${ic("trash")}</button></div>`).join(""):`<div class="empt">No grocery expenses yet.<br>Tap "Add expense" to start.</div>`;
+$("ab").innerHTML=S.adv.length?S.adv.map((x,i)=>`<div class="txn adv"><div class="ar"><select aria-label="Given by" onchange="setAdv(${i},'f',this.value)">${opts(x.f)}</select><span class="arw">${ic("arrow")}</span><select aria-label="Received by" onchange="setAdv(${i},'t',this.value)">${opts(x.t)}</select></div><div class="ar2"><select aria-label="Date" onchange="setAdv(${i},'dt',this.value)">${dateOpts(x.dt)}</select><label class="amt">AED<input type="number" step="any" inputmode="decimal" value="${x.a}" aria-label="Amount" oninput="setAdv(${i},'a',+this.value||0)"></label><button class="x" onclick="delAdv(${i})" aria-label="Delete advance">${ic("trash")}</button></div></div>`).join(""):`<div class="empt">No cash advances this month</div>`;
+{const seen=new Set(["Weekly purchase","Chicken","Vegetables","Fruits","Fish","Meat","Rice","Milk"]);Object.keys(ALL).forEach(k=>(ALL[k].e||[]).forEach(x=>{const v=(x.r||"").trim();if(v)seen.add(v)}));S.e.forEach(x=>{const v=(x.r||"").trim();if(v)seen.add(v)});$("rmkl").innerHTML=[...seen].slice(0,60).map(v=>`<option value="${esc(v)}">`).join("")}
+fillPB();calc()}
+function calc(){
+const gt=S.e.reduce((s,x)=>s+x.a,0), days=S.m.reduce((s,p)=>s+p.d,0), rate=days?gt/days:0;
+$("gt").textContent=f(gt);$("td").textContent=days;$("rate").textContent=rate.toFixed(4);
+$("pt").innerHTML=S.m.map(p=>{const l=S.e.filter(x=>x.n==p.n),t=l.reduce((s,x)=>s+x.a,0);return t?`<span class="chp">${av(p.n)}${esc(p.n)} <b>${f(t)}</b></span>`:""}).join("");
+const fx=S.m.filter(p=>wmOf(p)=="f"), fn=S.m.filter(p=>imOf(p)=="f"), sh=S.m.filter(p=>wmOf(p)!="f"), nD=S.m.reduce((s,p)=>s+eff(p).nd,0), wD=sh.reduce((s,p)=>s+eff(p).wd,0);
+const wRate=wD?(S.water-fx.length*S.fixed)/wD:0, nRate=nD?(S.net-fn.length*S.fixedNet)/nD:0;
+const xOn=S.xa>0,xl=xLab(),xF=S.m.filter(p=>xmOf(p)=="f"),xD=xOn?S.m.reduce((s,p)=>s+(xmOf(p)=="f"?0:xe(p)),0):0,xRate=xOn&&xD?(S.xa-xF.length*S.xf)/xD:0;
+{const uw=[],chk=(nm,tot,k,fa,dd)=>{if(!k||!(tot>0))return;const rest=tot-k*fa;if(rest<-0.005)uw.push("Fixed "+nm+" charges ("+f(k*fa)+" AED) are more than the "+nm+" bill ("+f(tot)+" AED).");else if(!(dd>0)&&Math.abs(rest)>0.005)uw.push("Nobody is left to share the rest of the "+nm+" bill ("+f(rest)+" AED).")};chk("water",S.water,fx.length,S.fixed,wD);chk("internet",S.net,fn.length,S.fixedNet,nD);chk(xl.toLowerCase(),xOn?S.xa:0,xF.length,S.xf,xD);$("uwn").innerHTML=uw.map(esc).join("<br>")}
+$("nr").textContent=nRate.toFixed(4);$("wr").textContent=wRate.toFixed(4);$("xr").textContent=xRate.toFixed(4);$("xrl").textContent=xl;$("xrk").style.display=xOn?"":"none";
+let T={c:0,a:0,m:0,w:0,n:0,x:0,pay:0,get:0},out=[],lines=[];D=[];E=[];R=[];
+const rows=S.m.map(p=>{
+const adv=S.e.filter(x=>x.n==p.n).reduce((s,x)=>s+x.a,0),m=p.d*rate,w=wmOf(p)=="f"?S.fixed:eff(p).wd*wRate,n=imOf(p)=="f"?S.fixedNet:eff(p).nd*nRate,x=!xOn?0:xmOf(p)=="f"?S.xf:xe(p)*xRate,given=S.adv.filter(x=>x.f==p.n).reduce((s,x)=>s+x.a,0),held=S.adv.filter(x=>x.t==p.n).reduce((s,x)=>s+x.a,0),cash=given-held,bill=m+w+n+x,b=adv+cash-bill;
+T.a+=adv;T.c+=cash;T.m+=m;T.w+=w;T.n+=n;T.x+=x;if(b<0)T.pay-=b;else T.get+=b;
+R.push({nm:p.n,d:p.d,nd:eff(p).nd,wd:eff(p).wd,fx:wmOf(p)=="f",fn:imOf(p)=="f",adv,cash,given,ms:m,w,nt:n,xt:x,xdy:xmOf(p)=="f"?"fixed":xe(p),xfx:xmOf(p)=="f",xm:xmOf(p),b});const nt=given>0.005?(b<-0.005?`bill ${f(bill)} - advance ${f(given)}`:`advance ${f(given)} - bill ${f(bill)}`):"";if(b<-0.005){D.push({n:p.n,a:-b,nt});lines.push(`${p.n} - ${f(-b)} AED`)}else if(b>0.005)E.push({n:p.n,a:b,nt});
+return `<tr><td data-l="Name" data-full>${esc(p.n)}</td><td data-l="Days">${p.d}</td><td data-l="Net days">${imOf(p)=="f"?"fixed":eff(p).nd}</td><td data-l="Water days">${wmOf(p)=="f"?"fixed":eff(p).wd}</td><td data-l="Groceries paid">${f(adv)}</td><td data-l="Cash adv." class="cadv">${cash?(cash>0?"+":"")+f(cash):"-"}</td><td data-l="Mess bill">${f(m)}</td><td data-l="Water">${f(w)}</td><td data-l="Net">${f(n)}</td><td data-l="${esc(xl)}" class="xcol">${f(x)}</td><td data-l="Balance">${f(b)}</td><td data-l="Due" class="pay">${b<0?f(-b):""}</td><td data-l="Extra" class="get">${b>0?f(b):""}</td></tr>`});
+$("rb").innerHTML=rows.join("");$("rtab").classList.toggle("noadv",!S.adv.length);$("rtab").classList.toggle("noxb",!xOn);$("xth").textContent=xl;
+$("plist").innerHTML=R.length?R.map((r,ri)=>{const pp=S.m[ri]||{},im=imOf(pp),wm=wmOf(pp),ch=(l,v,c)=>`<span class="${c||""}">${l} <b>${v}</b></span>`,
+ci=im=="f"?ch("Internet","fixed","fx"):im=="n"?ch("Internet","not used","no"):ch("Internet",r.nd+" days"),cw=wm=="f"?ch("Water","fixed","fx"):wm=="n"?ch("Water","not used","no"):ch("Water",r.wd+" days"),cxx=r=>!xShow()?"":ch(xLab(),r.xfx?"fixed":r.xm=="n"?"not used":r.xdy+" days",r.xfx?"fx":r.xm=="n"?"no":"");
+return `<div class="pc" role="button" tabindex="0" onclick="pdOpen(${ri})" onkeydown="if(event.key=='Enter')pdOpen(${ri})">${av(r.nm)}<div class="pnm"><b>${esc(r.nm)}</b><div class="pdays">${ch("Mess",r.d+" days")}${ci}${cw}${cxx(r)}</div></div><span class="pgo" aria-hidden="true">${ic("chev")}</span></div>`}).join(""):`<div class="empt" style="grid-column:1/-1">No people yet. Tap "Add person" below.</div>`;
+$("rf").innerHTML=`<tr><td data-l="Total" data-full>Total</td><td data-l="Days">${days}</td><td data-l="Net days">${nD}</td><td data-l="Water days">${wD}</td><td data-l="Groceries paid">${f(T.a)}</td><td data-l="Cash adv." class="cadv">${f(T.c)}</td><td data-l="Mess bill">${f(T.m)}</td><td data-l="Water">${f(T.w)}</td><td data-l="Net">${f(T.n)}</td><td data-l="${esc(xl)}" class="xcol">${f(T.x)}</td><td data-l="Balance"></td><td data-l="Due" class="pay">${f(T.pay)}</td><td data-l="Extra" class="get">${f(T.get)}</td></tr>`;
+const cT=D.reduce((s,x)=>s+x.a,0),cC=D.reduce((s,x)=>s+(S.r[x.n]?x.a:0),0),eT=E.reduce((s,x)=>s+x.a,0),eC=E.reduce((s,x)=>s+(S.f[x.n]?x.a:0),0);
+BL=[{k:"water",t:"Water bill",a:S.water},{k:"net",t:"Net bill",a:S.net}].concat(xOn?[{k:"extra",t:xl,a:S.xa}]:[]).filter(x=>x.a>0);
+const bT=BL.reduce((s,x)=>s+x.a,0),bP=BL.reduce((s,x)=>s+(S.bp[x.k]?x.a:0),0),cih=cC-eC-bP;
+const df=cT-(eT+bT);
+CLOSED=gt>0&&D.every(x=>S.r[x.n])&&E.every(x=>S.f[x.n])&&BL.every(x=>S.bp[x.k])&&Math.abs(df)<0.05;
+$("cl").innerHTML=D.length?D.map((x,i)=>`<div class="txn s${S.r[x.n]?" done":""}"><div class="tm"><b>${esc(x.n)}</b>${x.nt?`<small>${esc(x.nt)}</small>`:""}</div><b class="pay">${f(x.a)}</b><label class="tkl"><input class="tk" type="checkbox" ${S.r[x.n]?"checked":""} onchange="tick(${i},this.checked)" aria-label="Received from ${esc(x.n)}"></label><div class="mrow"><button data-keep onclick="reqMsg(${i})" title="Copy the payment request message">${ic("copy")} Request</button><button class="ok" onclick="rcv(${i})" title="Mark received and copy the received confirmation">${ic("thumb")} Received</button></div></div>`).join(""):'<div class="empt">Nobody has to pay</div>';
+$("ct").textContent=f(cT);$("cc").textContent=f(cC);$("cp").textContent=f(cT-cC);
+$("ok").textContent=D.length&&cT-cC<0.005?"✓ All collected":"";
+$("po").innerHTML=E.length?E.map((x,i)=>`<div class="txn s${S.f[x.n]?" done":""}"><div class="tm"><b>${esc(x.n)}</b>${x.nt?`<small>${esc(x.nt)}</small>`:""}</div><b class="get">${f(x.a)}</b><label class="tkl"><input class="tk" type="checkbox" ${S.f[x.n]?"checked":""} onchange="tickF(${i},this.checked)" aria-label="Refunded to ${esc(x.n)}"></label><div class="mrow"><button data-keep onclick="refMsg(${i})" title="Copy the refund information message">${ic("copy")} Refund info</button><button class="ok" onclick="rfd(${i})" title="Mark refunded and copy the refunded confirmation">${ic("check")} Refunded</button></div></div>`).join(""):'<div class="empt">No refunds</div>';
+$("rc").textContent=f(eC);$("rp").textContent=f(eT-eC);
+$("ok2").textContent=E.length&&eT-eC<0.005?"✓ All refunded":"";
+$("bl").innerHTML=BL.length?BL.map((x,i)=>`<div class="txn s${S.bp[x.k]?" done":""}"><span class="av ${x.k=="extra"?"a1":x.k=="net"?"a3":"a2"}">${ic(x.k=="extra"?"file":x.k=="net"?"wifi":"drop")}</span><div class="tm"><b>${esc(x.t)}</b></div><b>${f(x.a)}</b><label class="tkl"><input class="tk" type="checkbox" ${S.bp[x.k]?"checked":""} onchange="tickB(${i},this.checked)" aria-label="${esc(x.t)} paid"></label><div class="mrow"><button class="ok" onclick="pbill(${i})" title="Mark paid and copy the payment done message">${ic("check")} Payment done message</button></div></div>`).join(""):'<div class="empt">No bills</div>';
+$("st3").textContent="3 · Pay the bills ("+bilNames()+")";$("bpd").textContent=f(bP);$("bto").textContent=f(bT);$("cih").textContent=f(cih);
+$("ok3").textContent=BL.length&&bP>=bT-0.005?"✓ All bills paid":"";
+{const pg=(l,a,b)=>`<div class="pg"><div class="pgh"><span>${l}</span><b>${f(a)} / ${f(b)}</b></div><div class="bar"><i class="${b>0.005&&a>=b-0.005?"ok":""}" style="width:${b>0.005?Math.min(100,a/b*100):0}%"></i></div></div>`;
+$("pstat").innerHTML=pg("Collected from people",cC,cT)+pg("Refunded to people",eC,eT)+pg("Bills paid",bP,bT)+`<div class="pgh" style="margin-top:8px"><span>Cash in hand</span><b>${f(cih)} AED</b></div>`;
+const bdg=(id,a,b,none)=>{const e=$(id);e.textContent=b?`${a}/${b}`:none;e.className="bd "+(b&&a==b?"g":b?"o":"n")};
+bdg("b1",D.filter(x=>S.r[x.n]).length,D.length,"none");bdg("b2",E.filter(x=>S.f[x.n]).length,E.length,"none");bdg("b3",BL.filter(x=>S.bp[x.k]).length,BL.length,"none");
+{const e=$("b4");e.textContent=CLOSED?"Settled":"Open";e.className="bd "+(CLOSED?"g":"o")}{const e=$("b6");e.textContent=S.lock?"Closed":"Open";e.className="bd "+(S.lock?"g":"n")}
+$("sc1").textContent=f(cT-cC);$("sc2").textContent=f(eT-eC);$("sc3").textContent=f(bT-bP);$("sc4").textContent=S.lock?"Closed":"Open";$("sc4c").className="sc "+(S.lock?"sg":"sw");
+$("d1").textContent=S.m.length;$("d2").textContent=f(gt);$("d3").textContent=rate.toFixed(2);$("d4").textContent=days;$("d5").textContent=f(S.net);$("d6").textContent=f(S.water);$("dcx").style.display=xOn?"":"none";$("d9n").textContent=xl;$("d9").textContent=f(S.xa);$("d7").textContent=f(cT);$("d7s").textContent=cT-cC>0.005?f(cT-cC)+" pending":(D.length?"all collected":"");$("d8").textContent=f(eT);$("d8s").textContent=eT-eC>0.005?f(eT-eC)+" pending":(E.length?"all refunded":"");
+$("utot").textContent=f(S.net+S.water+(xOn?S.xa:0));$("utsub").textContent="Internet + Water"+(xOn?" + "+xl:"");$("dmon").textContent=ML();{const e=$("dst");e.textContent=S.lock?"Closed":CLOSED?"Settled":"Open";e.className="bd "+(S.lock?"r":CLOSED?"g":"b")}}
+$("cs").innerHTML=Math.abs(df)<0.05?`<span class="get">✓ Balanced: collected ${f(cT)} = refunds ${f(eT)} + water ${f(S.water)} + net ${f(S.net)}${xOn?" + "+esc(xl.toLowerCase())+" "+f(S.xa):""}</span>`:`<span class="pay">Difference ${f(df)} AED - check the amounts</span>`;
+const orph=S.e.filter(x=>!S.m.some(p=>p.n==x.n)),oa=S.adv.filter(x=>!S.m.some(p=>p.n==x.f)||!S.m.some(p=>p.n==x.t));
+$("ow").textContent=(orph.length?`⚠ ${orph.length} expense(s) are under names not in the People list (${[...new Set(orph.map(x=>x.n))].join(", ")}), so they are not counted for anyone. `:"")+(oa.length?`⚠ ${oa.length} advance(s) use a name not in the People list, so the settlement will not balance.`:"");
+updSum();
+$("monl").textContent=monLabel()+(S.lock?" 🔒":"");$("ts1").textContent=S.m.length+" people";$("ts2").textContent=(S.net||S.water||S.xa)?`Net ${f(S.net)} · Water ${f(S.water)}`+(xOn?` · ${xl} ${f(S.xa)}`:""):"";$("ts3").textContent=S.e.length?`${S.e.length} · ${f(gt)} AED`:"";
+$("ts4").textContent=S.adv.length?`${S.adv.length} · ${f(S.adv.reduce((a,x)=>a+x.a,0))} AED`:"";$("ts5").textContent=D.length||E.length?`Due ${f(cT)} · Extra ${f(eT)}`:"";
+$("ts7").textContent=CLOSED?"✓ closed":(D.length||E.length||BL.length)?`Collected ${f(cC)} / ${f(cT)}`:"";
+S.gt=gt;S.cl=CLOSED;persist();expRefresh();
+const pk=prevWithPeople(),em=$("emp");em.style.display=(!S.m.length&&!S.e.length)?"block":"none";
+em.innerHTML=`<b>No bill for ${ML()} yet.</b> Enter the water and net bills, add people and grocery expenses below, or import them.`+(pk?`<p><button class="p" onclick="copyPeople()">${ic("users")} Copy people from ${mlabel(pk)}</button></p>`:"");
+applyLock();
+{const bw=$("bwho"),ho='<option value="">Everyone (full bill)</option>'+R.map(r=>`<option ${r.nm==bw.value?"selected":""}>${esc(r.nm)}</option>`).join("");if(bw.dataset.h!==ho){const cv=bw.value;bw.innerHTML=ho;bw.dataset.h=ho;if(!R.some(r=>r.nm==cv))bw.value=""}}
+try{LASTO={gt,days,rate,T,cT,eT};drawBill(LASTO);BCUR=BC;const pr=$("bwho").value?R.find(r=>r.nm==$("bwho").value):null;if(pr){drawPerson(pr,LASTO);BCUR=PC}$("bimg").src=BCUR.toDataURL("image/png")}catch(e){}}
+function copyText(t){try{navigator.clipboard.writeText(t).catch(()=>fb(t))}catch(e){fb(t)}}
+function fb(t){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove()}
+function note(m){document.querySelectorAll(".msg").forEach(e=>e.textContent=m);setTimeout(()=>document.querySelectorAll(".msg").forEach(e=>e.textContent=""),2500);const t=$("toast");if(t){t.textContent=m;t.classList.add("on");clearTimeout(note.t);note.t=setTimeout(()=>t.classList.remove("on"),2600)}}
+/* ---------- messages: editable templates ---------- */
+const mnm=()=>(APP.mess||"").trim()||"the mess";
+const TPL=[
+{k:"reqOne",g:"Collect from people",t:"Request – one person",v:"name amount month mess",d:"Hi {name},\n\nYour {month} mess settlement for {mess} is ready.\n\nAmount to pay: AED {amount}\n\nPlease arrange the payment when convenient.\n\nThank you."},
+{k:"reqAll",g:"Collect from people",t:"Request – everyone",v:"list total count month mess",d:"Hi everyone,\n\nThe {month} mess settlement for {mess} is ready. Please pay your share:\n\n{list}\n\nTotal to collect: AED {total}\n\nThank you."},
+{k:"rcvOne",g:"Collect from people",t:"Received confirmation – one person",v:"name amount month mess list total count",d:"Hi {name}, thank you 👍\nYour payment of AED {amount} for {month} has been received.",p:"Still pending:\n{list}\n\nTotal pending: AED {total}\nKindly settle when convenient.",n:"All payments for {month} are now received. Thank you, everyone 👍"},
+{k:"rcvAll",g:"Collect from people",t:"Received confirmation – everyone",v:"list total count month mess",d:"Hi everyone, thank you 👍\nPayments received for {month}:\n\n{list}\n\nTotal received: AED {total}",p:"Still pending:\n{list}\n\nTotal pending: AED {total}\nKindly settle when convenient.",n:"All payments for {month} are now received. Thank you, everyone 👍"},
+{k:"refOne",g:"Refund (after all collected)",t:"Refund information – one person",v:"name amount month mess",d:"Hi {name},\n\nYour {month} mess settlement for {mess} shows a refund of AED {amount}.\n\nI will transfer it to you shortly.\n\nThank you."},
+{k:"refAll",g:"Refund (after all collected)",t:"Refund information – everyone",v:"list total count month mess",d:"Hi everyone,\n\nThe {month} refunds for {mess} will be transferred once all payments are collected:\n\n{list}\n\nTotal refund: AED {total}\n\nThank you."},
+{k:"rfdOne",g:"Refund (after all collected)",t:"Refunded confirmation – one person",v:"name amount month mess list total count",d:"Hi {name}, your refund of AED {amount} for {month} has been sent ✅\nThank you.",p:"Refunds still to send:\n{list}",n:"All refunds for {month} are now completed ✅"},
+{k:"rfdAll",g:"Refund (after all collected)",t:"Refunded confirmation – everyone",v:"list total count month mess",d:"Hi everyone, the {month} refunds have been sent ✅\n\n{list}\n\nTotal refunded: AED {total}",p:"Refunds still to send:\n{list}\n\nTotal pending: AED {total}",n:"All refunds for {month} are now completed ✅"},
+{k:"bilOne",g:"Pay the bills",t:"Bill paid update – one bill",v:"bill amount month mess list total count",d:"Update: {bill} of AED {amount} for {month} has been paid ✅",p:"Still to pay:\n{list}",n:"All bills for {month} are now paid ✅"},
+{k:"bilAll",g:"Pay the bills",t:"Bill paid update – all bills",v:"list total count month mess",d:"Update: the bills for {month} are paid ✅\n\n{list}\n\nTotal paid: AED {total}",p:"Still to pay:\n{list}\n\nTotal pending: AED {total}",n:"All bills for {month} are now paid ✅"},
+{k:"upd",g:"Full WhatsApp update",t:"Full WhatsApp update",v:"mess month collect refund bills billnames pending grocery internet water expenses signature",d:"*{mess}*\n*Monthly Mess Update — {month}*\n\n*Collect from people*\n{collect}\n\n*Refund (after all collected)*\n{refund}\n\n*Pay the bills ({billnames})*\n{bills}\n\n*Pending:* {pending}\n\n{signature}"},
+{k:"ln",g:"Lines and signature",t:"List line (name and amount)",v:"name bill amount",d:"{name} – AED {amount}"},
+{k:"lnOk",g:"Lines and signature",t:"Full update line – done",v:"name bill amount status",d:"{name} – AED {amount} ✅ {status}"},
+{k:"lnNo",g:"Lines and signature",t:"Full update line – pending",v:"name bill amount status",d:"{name} – AED {amount} ⏳ {status}"},
+{k:"sig",g:"Lines and signature",t:"Signature (end of every message)",v:"by",d:"— {by}"}
+];
+const TD={};TPL.forEach(t=>{TD[t.k]=t.d;if(t.p!=null){TD[t.k+".p"]=t.p;TD[t.k+".d"]=t.n}});
+const TAGD={name:"person's name",amount:"amount, number only (like 90.00)",month:"month and year",mess:"mess name",list:"names with amounts",total:"total amount",count:"how many",bill:"bill name (Water bill / Net bill / your extra bill)",billnames:"names of the bills, like water & net",collect:"collect list with status",refund:"refund list with status",bills:"bills list with status",pending:"what is still pending",grocery:"total grocery",internet:"internet bill",water:"water bill",expenses:"total expenses",signature:"Prepared by + app name",status:"received / refunded / paid / pending",by:"Prepared by name"};
+const tp=k=>(APP.tpl&&typeof APP.tpl[k]==="string")?APP.tpl[k]:TD[k];
+function fill(t,v){return String(t==null?"":t).replace(/\{(\w+)\}/g,(m,k)=>Object.prototype.hasOwnProperty.call(v,k)?String(v[k]):m).replace(/[ \t]+(\n|$)/g,"$1").replace(/\n{3,}/g,"\n\n").trim()}
+const sigTxt=()=>APP.pb?fill(tp("sig"),{by:APP.pb}):"";
+const sigFull=()=>(APP.pb?"Prepared by "+APP.pb+"\n":"")+"NK MessMate\nYour Mess • My Mate";
+const sumA=a=>a.reduce((q,x)=>q+x.a,0);
+const lnV=(x,st)=>({name:x.n||x.t,bill:x.t||x.n,amount:fm(x.a),status:st||""});
+const gen=a=>a.map(x=>fill(tp("ln"),lnV(x))).join("\n");
+const listV=a=>({list:gen(a),total:fm(sumA(a)),count:a.length});
+const joinM=(...a)=>a.filter(q=>q&&String(q).trim()).join("\n\n");
+function build(k,mv,pend){const b={mess:mnm(),month:ML()},m=fill(tp(k),Object.assign({},b,mv));let pt="";
+if(pend){pt=pend.length?fill(tp(k+".p"),Object.assign({},b,listV(pend))):fill(tp(k+".d"),b)}
+return joinM(m,pt,sigTxt())}
+function liveCtx(){return{D,E,BL,r:S.r,f:S.f,bp:S.bp,gt:S.e.reduce((a,x)=>a+x.a,0),net:S.net,water:S.water,xa:S.xa}}
+const SAMPLE=()=>({D:[{n:"Nehru",a:152.94},{n:"Tiju",a:152.94},{n:"Biju",a:152.94}],E:[{n:"Anand",a:300.5},{n:"Naveen",a:120}],BL:[{k:"water",t:"Water bill",a:90},{k:"net",t:"Net bill",a:178.38}],r:{},f:{},bp:{},gt:1774.51,net:178.38,water:90});
+let XC=null;const cx=()=>XC||liveCtx();
+const pdD=c=>c.D.filter(x=>!c.r[x.n]),pdE=c=>c.E.filter(x=>!c.f[x.n]),pdB=c=>c.BL.filter(x=>!c.bp[x.k]);
+function mReq1(x){return build("reqOne",{name:x.n,amount:fm(x.a)})}
+function mReqAll(){const p=pdD(cx());return p.length?build("reqAll",listV(p)):""}
+function mRcv1(x){return build("rcvOne",{name:x.n,amount:fm(x.a)},pdD(cx()))}
+function mRcvAll(){const c=cx(),g=c.D.filter(x=>c.r[x.n]);return g.length?build("rcvAll",listV(g),pdD(c)):""}
+function mRef1(x){return build("refOne",{name:x.n,amount:fm(x.a)})}
+function mRefAll(){const p=pdE(cx());return p.length?build("refAll",listV(p)):""}
+function mRfd1(x){return build("rfdOne",{name:x.n,amount:fm(x.a)},pdE(cx()))}
+function mRfdAll(){const c=cx(),g=c.E.filter(x=>c.f[x.n]);return g.length?build("rfdAll",listV(g),pdE(c)):""}
+function mBil1(x){return build("bilOne",{bill:x.t,name:x.t,amount:fm(x.a)},pdB(cx()))}
+function mBilAll(){const c=cx(),g=c.BL.filter(x=>c.bp[x.k]);return g.length?build("bilAll",listV(g),pdB(c)):""}
+function mUpd(){const c=cx(),sec=(a,dn,st,none)=>a.length?a.map(x=>fill(tp(dn(x)?"lnOk":"lnNo"),lnV(x,dn(x)?st:"pending"))).join("\n"):none,
+pc=pdD(c),pr=pdE(c),pb=pdB(c),pend=[];
+if(pc.length)pend.push("collect from "+pc.map(x=>x.n).join(", "));if(pr.length)pend.push("refund "+pr.map(x=>x.n).join(", "));if(pb.length)pend.push("pay "+pb.map(x=>x.t).join(" & "));
+const any=c.D.length||c.E.length||c.BL.length;
+return fill(tp("upd"),{mess:mnm(),month:ML(),collect:sec(c.D,x=>c.r[x.n],"received","Nothing to collect"),refund:sec(c.E,x=>c.f[x.n],"refunded","No refunds"),bills:sec(c.BL,x=>c.bp[x.k],"paid","No bills"),
+pending:pend.length?pend.join("; "):(any?"none – everything is settled ✅":"nothing yet"),grocery:fm(c.gt),internet:fm(c.net),water:fm(c.water),expenses:fm(c.gt+c.net+c.water+(c.xa||0)),billnames:bilNames(),signature:sigFull()})}
+function updSum(){const e=$("sum");if(e)e.value=mUpd()}
+function cp(m,ok,none){if(!m){note(none||"Nothing to copy yet");return}copyText(m);note(ok)}
+function reqMsg(i){const x=D[i];if(x)cp(mReq1(x),"Request for "+x.n+" copied")}
+function refMsg(i){const x=E[i];if(x)cp(mRef1(x),"Refund information for "+x.n+" copied")}
+function reqAll(){cp(mReqAll(),"Request for all copied",D.length?"Everyone has already paid":"Nobody has to pay")}
+function rcvAll(){cp(mRcvAll(),"Received confirmation for all copied","No payment is marked as received yet")}
+function refAll(){cp(mRefAll(),"Refund information for all copied",E.length?"All refunds are already sent":"No refunds")}
+function rfdAll(){cp(mRfdAll(),"Refunded confirmation for all copied","No refund is marked as sent yet")}
+function bilAll(){cp(mBilAll(),"Bill paid update for all copied","No bill is marked as paid yet")}
+function tick(i,v){if(lk())return;S.r[D[i].n]=v;calc()}
+function tickF(i,v){if(lk())return;S.f[E[i].n]=v;calc()}
+function tickB(i,v){if(lk())return;S.bp[BL[i].k]=v;calc()}
+function rcv(i){if(lk())return;const x=D[i];if(!x)return;S.r[x.n]=true;calc();cp(mRcv1(x),"Marked received. Confirmation for "+x.n+" copied 👍")}
+function rfd(i){if(lk())return;const x=E[i];if(!x)return;S.f[x.n]=true;calc();cp(mRfd1(x),"Marked refunded. Confirmation for "+x.n+" copied")}
+function pbill(i){if(lk())return;const x=BL[i];if(!x)return;S.bp[x.k]=true;calc();cp(mBil1(x),x.t+" marked paid. Message copied")}
+function copySum(){copyText($("sum").value);note("Full update copied")}
+/* ---- settings: message editor ---- */
+let TPK="reqOne",TPF=null,TPRA=0;
+function tplInit(){const s=$("tpsel");if(!s.options.length){let h="",g="";TPL.forEach(t=>{if(t.g!=g){if(g)h+="</optgroup>";h+=`<optgroup label="${esc(t.g)}">`;g=t.g}h+=`<option value="${t.k}">${esc(t.t)}</option>`});s.innerHTML=h+"</optgroup>"}s.value=TPK;tplFields()}
+function tplPick(){TPK=$("tpsel").value;TPF=null;tplFields()}
+function tplFields(){const t=TPL.find(x=>x.k==TPK);if(!t)return;const box=$("tpf");box.innerHTML="";
+const add=(key,lab)=>{const l=document.createElement("label"),sp=document.createElement("span"),ta=document.createElement("textarea");sp.textContent=lab;ta.dataset.k=key;ta.rows=key==="upd"?14:key.endsWith(".d")?2:4;ta.value=tp(key);ta.setAttribute("aria-label",lab);ta.addEventListener("input",()=>tplEdit(ta));ta.addEventListener("focus",()=>{TPF=ta});l.appendChild(sp);l.appendChild(ta);box.appendChild(l)};
+if(t.p!=null){add(t.k,"Message");add(t.k+".p","Added when others are still pending (here {list}, {total} and {count} mean the pending ones)");add(t.k+".d","Added when nothing is pending")}else add(t.k,t.k=="upd"?"Full update text":t.k=="sig"?"Signature":"Message");
+$("tpc").innerHTML=t.v.split(" ").map(g=>`<button type="button" data-keep onclick="tplIns('{${g}}')" title="${esc(TAGD[g]||"")}">{${g}}</button>`).join("");
+$("tptip").textContent=t.v.split(" ").map(g=>"{"+g+"} = "+(TAGD[g]||"")).join("  ·  ")+(t.v.includes("amount")?".  Tip: {amount} is the number only, so write it like \"AED {amount}\" or \"{amount} AED\".":"");
+tplPreview()}
+function tplIns(tag){const box=$("tpf");let el=TPF&&box.contains(TPF)?TPF:box.querySelector("textarea");if(!el)return;const a=el.selectionStart==null?el.value.length:el.selectionStart,b=el.selectionEnd==null?a:el.selectionEnd;el.value=el.value.slice(0,a)+tag+el.value.slice(b);const p=a+tag.length;try{el.focus();el.setSelectionRange(p,p)}catch(x){}tplEdit(el)}
+function tplEdit(el){const k=el.dataset.k;APP.tpl=APP.tpl||{};if(el.value===TD[k])delete APP.tpl[k];else APP.tpl[k]=el.value.slice(0,2000);APP.u=Date.now();lsSave();dbPutApp();tplPreview();updSum()}
+const NEEDS={reqOne:"D",reqAll:"D",rcvOne:"D",rcvAll:"D",refOne:"E",refAll:"E",rfdOne:"E",rfdAll:"E",bilOne:"BL",bilAll:"BL"};
+function pvMsg(k){const live=liveCtx(),nd=NEEDS[k],ok=nd?live[nd].length>0:(live.D.length||live.E.length||live.BL.length);const c=ok?live:SAMPLE();XC=Object.assign({},c);
+try{const D0=c.D[0],E0=c.E[0],B0=c.BL[0];let m="";
+if(k=="reqOne"||k=="sig")m=D0?mReq1(D0):mUpd();
+else if(k=="reqAll"||k=="ln"){XC.r={};m=mReqAll()}
+else if(k=="rcvOne"){XC.r={[D0.n]:true};m=mRcv1(D0)}
+else if(k=="rcvAll"){XC.r={[D0.n]:true};m=mRcvAll()}
+else if(k=="refOne")m=mRef1(E0);else if(k=="refAll"){XC.f={};m=mRefAll()}
+else if(k=="rfdOne"){XC.f={[E0.n]:true};m=mRfd1(E0)}
+else if(k=="rfdAll"){XC.f={[E0.n]:true};m=mRfdAll()}
+else if(k=="bilOne"){XC.bp={[B0.k]:true};m=mBil1(B0)}
+else if(k=="bilAll"){XC.bp={[B0.k]:true};m=mBilAll()}
+else m=mUpd();
+return{m,sample:!ok}}finally{XC=null}}
+function tplPreview(){let r;try{r=pvMsg(TPK)}catch(e){r={m:"",sample:true}}$("tppv").textContent=r.m||"(empty)";$("tpsrc").textContent=r.sample?"PREVIEW (SAMPLE NAMES AND AMOUNTS)":"PREVIEW (THIS MONTH'S DATA)"}
+function tplReset(){const t=TPL.find(x=>x.k==TPK);if(!t||!APP.tpl)return;[t.k,t.k+".p",t.k+".d"].forEach(k=>{delete APP.tpl[k]});APP.u=Date.now();lsSave();dbPutApp();tplFields();updSum();note("Message reset to the original wording")}
+function tplResetAll(){const b=$("tprall");if(!TPRA){TPRA=1;b.textContent="Tap again to reset all";setTimeout(()=>{TPRA=0;b.textContent="Reset all messages"},3500);return}TPRA=0;b.textContent="Reset all messages";APP.tpl={};APP.u=Date.now();lsSave();dbPutApp();tplFields();updSum();note("All messages reset to the original wording")}
+function resetTicks(){if(lk())return;S.r={};S.f={};S.bp={};calc();note("All ticks cleared")}
+function cvBlob(cv){const u=cv.toDataURL("image/png"),s=atob(u.split(",")[1]),a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return new Blob([a],{type:"image/png"})}
+async function saveBlob(b,nm,pre){
+try{const dl=window.claude&&claude.use?await claude.use("downloads"):null;
+if(dl){try{await dl.save({filename:nm,data:b});note(pre?pre+" image was saved":"Image saved");return}catch(e){if(e&&e.code=="declined")return}}}catch(e){}
+try{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=nm;document.body.appendChild(a);a.click();a.remove();note((pre?pre+" image was downloaded":"Image downloaded")+". If nothing happened, long-press the picture to save it")}catch(e){note("Could not save. Long-press the picture to save it")}}
+function shareCanvas(cv,nm,title,mode){if(!cv)return;const b=cvBlob(cv);
+if(mode=="d"){saveBlob(b,nm);return}
+let fl=null;try{fl=new File([b],nm,{type:"image/png"})}catch(e){}
+if(fl&&navigator.share&&navigator.canShare&&navigator.canShare({files:[fl]})){navigator.share({files:[fl],title}).catch(e=>{if(e&&e.name=="AbortError")return;saveBlob(b,nm,"Sharing did not open, so the")});return}
+saveBlob(b,nm,"Sharing is not available here, so the")}
+const slug=()=>ML().replace(/\s+/g,"-");
+function shareImg(mode){if(!R.length||!LASTO){note("Nothing to share yet - this month is empty");return}const w=$("bwho").value;SC=2;let cv=BC;try{drawBill(LASTO);const pr=w?R.find(r=>r.nm==w):null;if(pr){drawPerson(pr,LASTO);cv=PC}shareCanvas(cv,"mess-bill-"+(w?w.replace(/\s+/g,"-")+"-":"")+slug()+".png","Mess bill",mode)}finally{SC=1}setTimeout(calc,0)}
+function expRefresh(){const im=$("eimg");if(!im||im.style.display=="none")return;try{if(!S.e.length){im.style.display="none";return}drawExp();im.src=EC.toDataURL("image/png")}catch(e){}}
+function shareExp(mode){if(!S.e.length){note("No expenses to share yet");return}drawExp();$("eimg").src=EC.toDataURL("image/png");$("eimg").style.display="block";SC=2;try{drawExp();shareCanvas(EC,"grocery-expenses-"+slug()+".png","Grocery expenses",mode)}finally{SC=1}}
+function rr(g,x,y,w,h,r){g.beginPath();if(g.roundRect)g.roundRect(x,y,w,h,r);else g.rect(x,y,w,h);g.fill()}
+/* ---------- image design system (shared by all shared images) ---------- */
+const IMC={ink:"#0f1b33",gold:"#4f5bd5",gd:"#3a44ad",goldL:"#eceeff",paper:"#f4f7fc",line:"#e4eaf4",mu:"#6b7a90",red:"#dc2626",redBg:"#fdeaea",grn:"#16a34a",grnBg:"#e6f6ec",wn:"#d97706",wnBg:"#fff3dd"};
+const ACC={bill:["#4f5bd5","#3a44ad","#eceeff"],person:["#0d9488","#0b766d","#e0f5f2"],exp:["#0284c7","#02699f","#e3f3fc"]};
+function setAcc(k){const a=ACC[k]||ACC.bill;IMC.gold=a[0];IMC.gd=a[1];IMC.goldL=a[2]}
+let IW=960;const IP=28,FF='system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif';
+let SC=1,LASTO=null;
+const LOGO=new Image();LOGO.onload=()=>{try{if(S)calc()}catch(e){}};LOGO.src=LOGO_SRC;
+const MC=document.createElement("canvas").getContext("2d");
+const fnt=(w,s)=>`${w} ${s}px ${FF}`;
+const tw=(t,w,s)=>{MC.font=fnt(w,s);return MC.measureText(t).width};
+function tx(g,t,x,y,s,w,c,a){g.font=fnt(w,s);g.fillStyle=c;g.textAlign=a||"left";g.textBaseline="middle";g.fillText(t,x,y)}
+function rrect(g,x,y,w,h,r,fill,stroke){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();if(fill){g.fillStyle=fill;g.fill()}if(stroke){g.strokeStyle=stroke;g.lineWidth=1.5;g.stroke()}}
+function fit(t,w,s,max){t=String(t);if(tw(t,w,s)<=max)return t;while(t.length>1&&tw(t+"…",w,s)>max)t=t.slice(0,-1);return t+"…"}
+function wrapText(t,max,w,s){const out=[];let cur="";String(t).split(/\s+/).forEach(wd=>{const n=cur?cur+" "+wd:wd;if(cur&&tw(n,w,s)>max){out.push(cur);cur=wd}else cur=n});if(cur)out.push(cur);return out}
+const fm=n=>{const p=f(Math.abs(n)).split(".");return (n<-0.004?"-":"")+p[0].replace(/\B(?=(\d{3})+(?!\d))/g,",")+"."+p[1]};
+function txs(g,t,x,y,s,mn,w,c,a,max){t=String(t);while(s>mn&&tw(t,w,s)>max)s--;if(tw(t,w,s)>max)t=fit(t,w,s,max);tx(g,t,x,y,s,w,c,a)}
+const WDF=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+function dtParts(v){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||"");if(!m)return{d:v||"-",w:""};return{d:m[3]+"-"+MN[+m[2]-1],w:WDF[new Date(+m[1],+m[2]-1,+m[3]).getDay()]}}
+function ihead(g,H0,hd){g.fillStyle="#fff";g.fillRect(0,0,IW,H0);g.fillStyle=IMC.gold;g.fillRect(0,0,IW,8);
+const nm=String(hd.k).toUpperCase();let z=48;while(z>26&&tw(nm,800,z)>IW-2*IP)z--;tx(g,fit(nm,800,z,IW-2*IP),IP,62,z,800,IMC.ink);
+try{g.letterSpacing="2px"}catch(e){}tx(g,hd.t,IP,102,20,700,IMC.gd);try{g.letterSpacing="0px"}catch(e){}
+tx(g,hd.m,IP,133,24,500,IMC.mu);g.fillStyle=IMC.line;g.fillRect(0,H0-1.5,IW,1.5)}
+function ifoot(g,y){const x=IP,w=IW-2*IP,cy=y+48,r=26,lx=IW-IP-r,rx=lx-r-14;g.fillStyle=IMC.line;g.fillRect(x,y+4,w,1.5);
+if(APP.pb){tx(g,"Prepared by",x,cy-11,15,500,IMC.mu);tx(g,fit(APP.pb,700,21,w/2),x,cy+11,21,700,IMC.ink)}
+tx(g,"NK MessMate",rx,cy-11,21,800,IMC.gd,"right");tx(g,"Your Mess • My Mate",rx,cy+11,15,500,IMC.mu,"right");
+if(LOGO.complete&&LOGO.naturalWidth){g.save();g.beginPath();g.arc(lx,cy,r,0,7);g.clip();g.drawImage(LOGO,lx-r,cy-r,2*r,2*r);g.restore();g.beginPath();g.arc(lx,cy,r,0,7);g.strokeStyle=IMC.line;g.lineWidth=2;g.stroke()}}
+function compose(cv,hd,secs){setAcc(hd.acc);const H0=156,gap=10;let H=H0+gap;secs.forEach(s=>H+=s.h+gap);H+=86;
+cv.width=Math.round(IW*SC);cv.height=Math.round(H*SC);const g=cv.getContext("2d");g.setTransform(SC,0,0,SC,0,0);
+g.fillStyle=IMC.paper;g.fillRect(0,0,IW,H);ihead(g,H0,hd);let y=H0+gap;secs.forEach(s=>{s.draw(g,IP,y,IW-2*IP);y+=s.h+gap});ifoot(g,y);return cv}
+const mess_=()=>(APP.mess||"").trim()||"Mess";
+function tiles(it,cols){const th=88,gp=10,rows=Math.ceil(it.length/cols);return{h:rows*th+(rows-1)*gp,draw(g,x,y,w){const cw=(w-(cols-1)*gp)/cols;
+it.forEach((t,i)=>{const cx=x+(i%cols)*(cw+gp),cy=y+Math.floor(i/cols)*(th+gp);rrect(g,cx,cy,cw,th,16,"#fff",IMC.line);
+txs(g,t.l,cx+16,cy+22,17,12,500,IMC.mu,"left",cw-32);let s=32;while(s>18&&tw(t.v,700,s)>cw-32)s--;tx(g,t.v,cx+16,cy+50,s,700,IMC.ink);
+txs(g,t.s||"",cx+16,cy+74,16,10,t.ok?600:400,t.ok?IMC.grn:IMC.mu,"left",cw-32)})}}}
+function textSec(lines,col,sz,w_,al){const lh=sz+6;return{h:lines.length*lh+8,draw(g,x,y,w){lines.forEach((l,i)=>{const o=typeof l=="string"?{t:l}:l;tx(g,o.t,al=="c"?x+w/2:x+4,y+6+lh/2+i*lh,o.s||sz,o.w||w_,o.c||col,al=="c"?"center":"left")})}}}
+function stmtSec(){const P=18,rh=58,xOn=S.xa>0,xl=xLab();
+const cols=[["MESS",r=>f(r.ms)],["WATER",r=>f(r.w)],["NET",r=>f(r.nt)]];
+if(xOn)cols.push([xl.toUpperCase(),r=>f(r.xt)]);
+if(R.some(r=>r.adv>0.005))cols.push(["PAID",r=>r.adv>0.005?f(r.adv):"-"]);
+if(R.some(r=>Math.abs(r.cash)>0.005))cols.push(["CASH ADV",r=>Math.abs(r.cash)>0.005?(r.cash>0?"+":"-")+f(Math.abs(r.cash)):"-"]);
+const inner=IW-2*IP-2*P,BW=176;let NW=R.reduce((a,r)=>Math.max(a,tw(r.nm,700,24)),0)+14;NW=Math.min(230,Math.max(140,NW));
+const cw=(inner-NW-BW)/cols.length,body=R.length?R.length*rh:60;
+const two=cols.some(c=>tw(c[0],700,15)>cw-8&&c[0].indexOf(" ")>=0),hd=two?46:40,hy=two?24:22;
+return{h:hd+body+10,draw(g,x,y,w){rrect(g,x,y,w,hd+body+10,18,"#fff",IMC.line);
+const cr=i=>x+P+NW+(i+1)*cw-8,mx=cw-8;
+tx(g,"PERSON",x+P,y+hy,15,700,IMC.gd);
+cols.forEach((c,i)=>{const lb=c[0];if(tw(lb,700,15)<=mx||lb.indexOf(" ")<0)txs(g,lb,cr(i),y+hy,15,9,700,IMC.gd,"right",mx);else{const k=lb.lastIndexOf(" ");txs(g,lb.slice(0,k),cr(i),y+14,13,9,700,IMC.gd,"right",mx);txs(g,lb.slice(k+1),cr(i),y+32,13,9,700,IMC.gd,"right",mx)}});
+tx(g,"BALANCE",x+w-P,y+hy,15,700,IMC.gd,"right");
+let ry=y+hd-6;if(!R.length)tx(g,"No people added yet",x+P,ry+30,22,500,IMC.mu);
+R.forEach(r=>{const dn=r.b<-0.005,ex=r.b>0.005,col=dn?IMC.red:ex?IMC.grn:IMC.mu;
+g.fillStyle=IMC.line;g.fillRect(x+P,ry,w-2*P,1.5);
+if(dn||ex)rrect(g,x+6,ry+12,4,rh-24,2,col);
+txs(g,r.nm,x+P,ry+22,24,15,700,IMC.ink,"left",NW-10);tx(g,`${r.d} days`,x+P,ry+45,15,400,IMC.mu);
+cols.forEach((c,i)=>{const v=c[1](r);txs(g,v,cr(i),ry+rh/2,20,12,600,v=="-"?IMC.mu:IMC.ink,"right",cw-12)});
+tx(g,dn||ex?fm(Math.abs(r.b)):"0.00",x+w-P,ry+22,28,700,col,"right");
+tx(g,dn?(S.r[r.nm]?"✓ PAID":"TO PAY"):ex?(S.f[r.nm]?"✓ REFUNDED":"TO RECEIVE"):"SETTLED",x+w-P,ry+46,15,700,col,"right");
+ry+=rh})}}}
+function listSec(title,col,bg,list,done,suf,tl,tot){const P=16,rh=x=>(x.nt||done[x.n])?60:46,head=46,foot=54,body=list.length?list.reduce((a,x)=>a+rh(x),0):44;
+const o={h:head+body+foot,draw(g,x,y,w){const H=o.h;rrect(g,x,y,w,H,18,"#fff",IMC.line);
+rrect(g,x+P,y+15,12,18,4,col);txs(g,title,x+P+22,y+25,18,12,700,col,"left",w-2*P-22-100);tx(g,`${list.length} ${list.length==1?"person":"people"}`,x+w-P,y+25,16,500,IMC.mu,"right");
+let ry=y+head-4;if(!list.length)tx(g,"-",x+P,ry+22,22,500,IMC.mu);
+list.forEach((it,k)=>{const h=rh(it);g.fillStyle=IMC.line;g.fillRect(x+P,ry,w-2*P,1.5);
+const dn=done[it.n],two=it.nt||dn;
+txs(g,`${k+1}.  ${it.n}`,x+P,ry+(two?22:h/2),22,14,600,IMC.ink,"left",w-2*P-160);
+if(it.nt)txs(g,it.nt,x+P+26,ry+44,15,10,400,IMC.mu,"left",w-2*P-170);
+tx(g,fm(it.a)+" AED",x+w-P,ry+(dn?22:h/2),24,700,col,"right");if(dn)tx(g,"✓ "+suf,x+w-P,ry+h-15,15,700,IMC.grn,"right");ry+=h});
+const by=y+H-foot+4;rrect(g,x+8,by,w-16,42,12,bg);tx(g,tl,x+P+2,by+21,18,700,IMC.ink);tx(g,fm(tot)+" AED",x+w-P-2,by+21,24,700,col,"right")}};return o}
+function pairSec(a,b){const h=Math.max(a.h,b.h);return{h,draw(g,x,y,w){a.h=b.h=h;const gp=12,hw=(w-gp)/2;a.draw(g,x,y,hw);b.draw(g,x+hw+gp,y,hw)}}}
+function statusSec(o){const cC=D.reduce((a,x)=>a+(S.r[x.n]?x.a:0),0),eC=E.reduce((a,x)=>a+(S.f[x.n]?x.a:0),0),bT=BL.reduce((a,x)=>a+x.a,0),bP=BL.reduce((a,x)=>a+(S.bp[x.k]?x.a:0),0);
+const it=[["Collected",cC,o.cT],["Refunded",eC,o.eT],["Bills paid",bP,bT]];
+return{h:104,draw(g,x,y,w){rrect(g,x,y,w,104,18,"#fff",IMC.line);tx(g,"PAYMENT STATUS",x+18,y+22,15,700,IMC.gd);const cw=(w-36-24)/3;
+it.forEach((q,i)=>{const cx=x+18+i*(cw+12),done=q[2]<0.005||q[1]>=q[2]-0.005,pc=q[2]>0.005?Math.min(1,q[1]/q[2]):0;
+tx(g,q[0],cx,y+48,16,500,IMC.mu);const v=fm(q[1])+" / "+fm(q[2]);let s=22;while(s>14&&tw(v,700,s)>cw)s--;tx(g,v,cx,y+70,s,700,done&&q[2]>0.005?IMC.grn:IMC.ink);
+rrect(g,cx,y+86,cw,8,4,IMC.line);if(pc>0)rrect(g,cx,y+86,Math.max(8,cw*pc),8,4,done?IMC.grn:IMC.gold)})}}}
+function drawBill(o){IW=960;BC=BC||document.createElement("canvas");const days=o.days,rate=o.rate,xOn=S.xa>0,xl=xLab(),xs=xOn?S.xa:0;
+const lines=[],ok=Math.abs(o.cT-(o.eT+S.water+S.net+xs))<0.05;
+wrapText(`Collected ${fm(o.cT)} = Refunds ${fm(o.eT)} + Water ${fm(S.water)} + Net ${fm(S.net)}`+(xOn?` + ${xl} ${fm(S.xa)}`:""),IW-2*IP-8,500,19).forEach(l=>lines.push({t:l,c:IMC.ink,w:500,s:19}));
+if(CLOSED)lines.push({t:"✓ ALL CLOSED",c:IMC.grn,w:700,s:21});else if(ok)lines.push({t:"✓ Balanced",c:IMC.grn,w:600,s:19});
+wrapText(`Mess rate: ${f(rate)} AED per person per day (${fm(o.gt)} ÷ ${days} person-days). `+(xOn?`Internet, water and ${xl.toLowerCase()}`:"Internet and water")+` are shared by days used.`,IW-2*IP-8,400,17).forEach(l=>lines.push({t:l,c:IMC.mu,w:400,s:17}));
+const tl=[{l:"Total grocery",v:fm(o.gt),s:"AED"},{l:"Internet bill",v:fm(S.net),s:S.bp.net?"AED · ✓ paid":"AED",ok:S.bp.net},{l:"Water bill",v:fm(S.water),s:S.bp.water?"AED · ✓ paid":"AED",ok:S.bp.water}];
+if(xOn)tl.push({l:xl,v:fm(S.xa),s:S.bp.extra?"AED · ✓ paid":"AED",ok:S.bp.extra});
+tl.push({l:"Total expenses",v:fm(o.gt+S.water+S.net+xs),s:xOn?"AED · grocery + bills":"AED · grocery + internet + water"});
+const secs=[tiles(tl,tl.length<=4?tl.length:3),stmtSec(),pairSec(listSec("TO PAY (TOTAL PAYABLE)",IMC.red,IMC.redBg,D,S.r,"PAID","Total payable",o.cT),listSec("TO REFUND",IMC.grn,IMC.grnBg,E,S.f,"REFUNDED","Total refund",o.eT)),statusSec(o),textSec(lines,IMC.mu,19,400,"c")];
+compose(BC,{acc:"bill",k:mess_(),m:ML(),t:"MONTHLY MESS STATEMENT"},secs)}
+function drawPerson(r,o){IW=760;PC=PC||document.createElement("canvas");const dn=r.b<-0.005,ex=r.b>0.005,col=dn?IMC.red:ex?IMC.grn:IMC.mu,bill=r.ms+r.w+r.nt+(r.xt||0),xOn=S.xa>0,xl=xLab();
+const rows=[[`Grocery share  (${r.d} x ${f(o.rate)})`,fm(r.ms)+" AED"],[r.fn?"Internet  (fixed charge)":`Internet  (${r.nd} days)`,fm(r.nt)+" AED"],[r.fx?"Water  (fixed charge)":`Water  (${r.wd} days)`,fm(r.w)+" AED"]];
+if(xOn)rows.push([r.xfx?`${xl}  (fixed charge)`:r.xm=="n"?`${xl}  (not used)`:`${xl}  (${r.xdy} days)`,fm(r.xt)+" AED"]);
+rows.push(["Total bill",fm(bill)+" AED",1]);
+if(r.adv>0.005)rows.push(["Groceries you paid","- "+fm(r.adv)+" AED"]);
+if(r.cash>0.005)rows.push(["Cash advance you gave","- "+fm(r.cash)+" AED"]);else if(r.cash<-0.005)rows.push(["Cash advance you hold","+ "+fm(-r.cash)+" AED"]);
+const nameSec={h:112,draw(g,x,y,w){rrect(g,x,y,w,112,18,"#fff",IMC.line);rrect(g,x+20,y+18,76,76,38,IMC.goldL);tx(g,(r.nm.trim()[0]||"?").toUpperCase(),x+58,y+57,36,800,IMC.gd,"center");
+tx(g,"PERSON",x+116,y+28,15,700,IMC.mu);txs(g,r.nm,x+116,y+62,40,22,800,IMC.ink,"left",w-116-180);
+rrect(g,x+w-148,y+18,128,76,16,IMC.goldL);tx(g,"MESS DAYS",x+w-84,y+39,14,700,IMC.gd,"center");tx(g,String(r.d),x+w-84,y+71,34,800,IMC.gd,"center")}};
+const rh=52,hh=42,bh=rows.length*rh+22+hh,bd={h:bh,draw(g,x,y,w){rrect(g,x,y,w,bh,18,"#fff",IMC.line);tx(g,"EXPENSE SUMMARY",x+24,y+28,16,700,IMC.gd);
+rows.forEach((q,i)=>{const yy=y+hh+10+i*rh;if(q[2])rrect(g,x+10,yy+4,w-20,rh-8,12,IMC.goldL);else if(i){g.fillStyle=IMC.line;g.fillRect(x+22,yy,w-44,1.5)}
+txs(g,q[0],x+24,yy+rh/2,22,14,q[2]?700:500,q[2]?IMC.ink:IMC.mu,"left",w-48-190);tx(g,q[1],x+w-24,yy+rh/2,24,q[2]?800:600,IMC.ink,"right")})}};
+const st=dn?(S.r[r.nm]?"✓ PAID":"PENDING"):ex?(S.f[r.nm]?"✓ REFUNDED":"PENDING"):"SETTLED",stc=st=="PENDING"?IMC.wn:col;
+const res={h:140,draw(g,x,y,w){rrect(g,x,y,w,140,18,dn?IMC.redBg:ex?IMC.grnBg:"#eef2f8",col);tx(g,dn?"TOTAL PAYABLE":ex?"REFUND DUE TO YOU":"ALL SETTLED",x+26,y+34,20,700,col);
+const a=dn||ex?fm(Math.abs(r.b)):"0.00";tx(g,a,x+26,y+92,58,700,col);tx(g,"AED",x+26+tw(a,700,58)+12,y+102,24,600,col);
+{const sw=tw(st,700,21)+34;rrect(g,x+w-26-sw,y+18,sw,40,20,"#fff",stc);tx(g,st,x+w-26-sw/2,y+38,21,700,stc,"center")}}};
+compose(PC,{acc:"person",k:mess_(),m:ML(),t:"MONTHLY MESS STATEMENT"},[nameSec,bd,res])}
+function drawExp(){IW=960;EC=EC||document.createElement("canvas");
+const gt=S.e.reduce((a,x)=>a+x.a,0),days=S.m.reduce((a,p)=>a+p.d,0),rate=days?gt/days:0;
+const pp=S.m.map(p=>{const l=S.e.filter(x=>x.n==p.n);return{n:p.n,t:l.reduce((a,x)=>a+x.a,0),c:l.length}}).filter(x=>x.c>0);
+const P=18,head=44,gp=14,inner=IW-2*IP-2*P,RK="#3b4a63";
+const rows=S.e.map(q=>({q,dp:dtParts(q.dt),am:fm(q.a),rk:String(q.r||"").trim()})),hasR=rows.some(o=>o.rk);
+const dwOf=dp=>tw(dp.d,700,26)+(dp.w?10+tw(dp.w,400,19):0);
+const DW=Math.max(150,...rows.map(o=>dwOf(o.dp)))+10,AW=Math.max(110,...rows.map(o=>tw(o.am,700,26)))+50;
+let PW=Math.min(250,Math.max(100,...rows.map(o=>tw(o.q.n,600,24)))+6);if(hasR)PW=Math.min(PW,inner-DW-AW-3*gp-180);
+const RW=hasR?Math.max(120,inner-DW-PW-AW-3*gp):0;
+rows.forEach(o=>{o.s=20;o.l=[];if(hasR&&o.rk){while(o.s>16&&tw(o.rk,400,o.s)>RW)o.s--;if(tw(o.rk,400,o.s)<=RW)o.l=[o.rk];else{let ls=wrapText(o.rk,RW,400,o.s);if(ls.length>2){ls=ls.slice(0,2);ls[1]=ls[1]+" …"}o.l=ls.map(l=>fit(l,400,o.s,RW))}}o.h=o.l.length>1?58:44});
+const body=rows.length?rows.reduce((a,o)=>a+o.h,0):54;
+const exp={h:head+body+64,draw(g,x,y,w){rrect(g,x,y,w,exp.h,18,"#fff",IMC.line);
+const cD=x+P,cP=cD+DW+gp,cR=cP+PW+gp,cA=x+w-P;
+tx(g,"DATE",cD,y+24,15,700,IMC.gd);tx(g,"PERSON",cP,y+24,15,700,IMC.gd);if(hasR)tx(g,"REMARK",cR,y+24,15,700,IMC.gd);tx(g,"AMOUNT (AED)",cA,y+24,15,700,IMC.gd,"right");
+let ry=y+head-6;if(!rows.length)tx(g,"No expenses entered",x+P,ry+27,22,500,IMC.mu);
+rows.forEach(o=>{const vy=ry+o.h/2;g.fillStyle=IMC.line;g.fillRect(x+P,ry,w-2*P,1.5);
+tx(g,o.dp.d||"-",cD,vy,26,700,IMC.ink);if(o.dp.w)tx(g,o.dp.w,cD+tw(o.dp.d,700,26)+10,vy+1,19,400,IMC.mu);
+txs(g,o.q.n,cP,vy,24,15,600,IMC.ink,"left",PW);
+const lh=o.s+4;o.l.forEach((l,i)=>tx(g,l,cR,vy+(i-(o.l.length-1)/2)*lh,o.s,400,RK));
+tx(g,o.am,cA,vy,26,700,IMC.ink,"right");tx(g,"AED",cA-tw(o.am,700,26)-8,vy+1,14,500,IMC.mu,"right");ry+=o.h});
+rrect(g,x+8,ry+8,w-16,52,12,IMC.goldL);tx(g,"TOTAL GROCERY",x+P+4,ry+34,18,800,IMC.gd);const tt=fm(gt);tx(g,tt,x+w-P-4,ry+34,30,800,IMC.ink,"right");tx(g,"AED",x+w-P-4-tw(tt,800,30)-10,ry+36,16,600,IMC.mu,"right")}};
+const ncl=pp.length>1?2:1,prh=58,prow=Math.max(1,Math.ceil(pp.length/ncl));
+const pb={h:head+prow*prh+8,draw(g,x,y,w){rrect(g,x,y,w,pb.h,18,"#fff",IMC.line);tx(g,"PAID BY - PER PERSON",x+P,y+24,15,700,IMC.gd);
+const cwid=(w-2*P-(ncl-1)*24)/ncl;if(!pp.length)tx(g,"-",x+P,y+head+14,22,500,IMC.mu);
+pp.forEach((q,k)=>{const cx=x+P+(k%ncl)*(cwid+24),cy=y+head-6+Math.floor(k/ncl)*prh;g.fillStyle=IMC.line;g.fillRect(cx,cy,cwid,1.5);
+txs(g,`${k+1}.  ${q.n}`,cx,cy+22,22,15,600,IMC.ink,"left",cwid-150);tx(g,fm(q.t)+" AED",cx+cwid,cy+22,22,700,IMC.ink,"right");
+tx(g,`${q.c} purchase${q.c>1?"s":""}`,cx+26,cy+44,15,400,IMC.mu);rrect(g,cx+cwid-170,cy+40,170,8,4,IMC.line);if(gt>0)rrect(g,cx+cwid-170,cy+40,Math.max(8,170*q.t/gt),8,4,IMC.gold)})}};
+const secs=[tiles([{l:"Total grocery",v:fm(gt),s:"AED"},{l:"Purchases",v:String(S.e.length),s:"entries"},{l:"Per person / day",v:f(rate),s:"AED"}],3),exp,pb];
+const AV=S.adv.filter(x=>x.a>0.005);
+if(AV.length){const at=AV.reduce((a,x)=>a+x.a,0),ah=head+AV.length*46+58,adw=Math.max(150,...AV.map(q=>dwOf(dtParts(q.dt))))+10;
+secs.push({h:ah,draw(g,x,y,w){rrect(g,x,y,w,ah,18,"#fff",IMC.line);tx(g,"CASH ADVANCES (GIVEN TO THE BUYER)",x+P,y+24,15,700,IMC.gd);let ry=y+head-6;
+AV.forEach(q=>{const dp=dtParts(q.dt),vy=ry+23;g.fillStyle=IMC.line;g.fillRect(x+P,ry,w-2*P,1.5);
+tx(g,dp.d||"-",x+P,vy,26,700,IMC.ink);if(dp.w)tx(g,dp.w,x+P+tw(dp.d,700,26)+10,vy+1,19,400,IMC.mu);
+txs(g,`${q.f||"?"} → ${q.t||"?"}`,x+P+adw+gp,vy,23,15,600,IMC.ink,"left",w-2*P-adw-gp-150);tx(g,fm(q.a),x+w-P,vy,24,700,IMC.ink,"right");ry+=46});
+rrect(g,x+8,ry+8,w-16,46,12,IMC.goldL);tx(g,"Total advances",x+P+4,ry+31,19,700,IMC.ink);tx(g,fm(at)+" AED",x+w-P-4,ry+31,24,700,IMC.ink,"right")}})}
+secs.push(textSec(wrapText(`Total ${fm(gt)} AED ÷ ${days} person-days = ${f(rate)} AED per person per day`,IW-2*IP-8,500,19),IMC.mu,19,500,"c"));
+compose(EC,{acc:"exp",k:mess_(),m:ML(),t:"GROCERY EXPENSES"},secs)}
+/* ---------- app settings, tabs ---------- */
+let APT=null;function dbPutApp(){clearTimeout(APT);APT=setTimeout(()=>{if(DB){try{DB.doc("settings/app").set({mess:APP.mess,pb:APP.pb,u:APP.u,tpl:APP.tpl||{}}).catch(()=>{})}catch(e){}}},600)}
+function updMess(src){$("messname").textContent=(APP.mess||"").trim()||"(no mess name)";["messin","messin2"].forEach(i=>{const e=$(i);if(e&&e!==src&&e.value!==APP.mess)e.value=APP.mess});$("appv").textContent=APPV}
+function setMess(v,src){APP.mess=String(v).slice(0,30);APP.u=Date.now();lsSave();dbPutApp();updMess(src);calc()}
+function fillPB(){const names=S.m.map(p=>p.n);if(APP.pb&&!names.includes(APP.pb))names.push(APP.pb);
+$("pbsel").innerHTML='<option value="">- not set -</option>'+names.map(n=>`<option ${n==APP.pb?"selected":""}>${esc(n)}</option>`).join("")}
+function setPB(v){APP.pb=v;APP.u=Date.now();lsSave();dbPutApp();calc()}
+function updInit(){const a=$("updlnk"),b=$("updbtn"),r=$("bldrow"),s=$("srcrow"),h=$("updhint");if(!a||!b)return;
+$("updgo").style.display="none";$("upnotes").style.display="none";a.style.display="none";$("upmsg").textContent="";UPD=null;RSTARM=false;
+if(IN_APP){r.style.display="";s.style.display="";$("bldv").textContent=APP_BUILD;const o=lsGet("nkmm_ota");$("srcv").textContent=o?"Online update":"Built-in";
+$("updreset").style.display=o?"":"none";$("updreset").textContent="Use the built-in version";
+h.textContent="Needs internet. Your bills and settings stay on this phone when the app updates."}
+else{r.style.display="none";s.style.display="none";$("updreset").style.display="none";h.textContent="This is the Claude web version. Tap Check for Update to load the newest version here. The phone app is updated separately."}
+b.style.display="";b.disabled=false}
+function openSet(){updMess();updInit();tplInit();$("setm").style.display="flex"}
+function closeSet(){$("setm").style.display="none"}
+function upMsg(x,c){const m=$("upmsg");m.textContent=x;m.style.color=c||"var(--mu)"}
+async function upGet(p,ms,buf){const c=new AbortController(),tm=setTimeout(()=>c.abort(),ms);let r;
+try{r=await fetch(LIVE+p,{cache:"no-store",signal:c.signal})}catch(e){clearTimeout(tm);throw{k:"net"}}
+try{if(!r.ok)throw{k:r.status==404?"nf":"http"};return buf?await r.arrayBuffer():await r.text()}catch(e){throw e&&e.k?e:{k:"net"}}finally{clearTimeout(tm)}}
+function upErr(e){const k=e&&e.k,M={net:"Could not reach the update server. Check your internet and try again.",nf:"The update files are not online yet. Please tell Claude.",http:"The update server did not answer properly. Try again in a few minutes.",bad:"The update information is not readable. Please tell Claude.",hash:"The downloaded update does not match its check code. Nothing was changed. Try again, or tell Claude.",ver:"The downloaded file is not the version that was announced. Nothing was changed. Please tell Claude.",space:"Not enough free space on the phone to save the update. Nothing was changed."};
+upMsg(M[k]||"The update did not work. Nothing was changed.","var(--bad)")}
+async function checkUpdate(){
+if(!IN_APP){const m=$("upmsg");m.textContent="Checking for the latest version...";try{if(DB)dbFlush()}catch(e){}
+setTimeout(()=>{m.textContent="Version "+APPV+". Reloading to get the newest published version - your data is kept.";setTimeout(()=>{try{location.reload()}catch(e){m.textContent="Please close and reopen the app to update."}},1200)},800);return}
+const b=$("updbtn"),g=$("updgo"),n=$("upnotes"),a=$("updlnk");if(b.disabled)return;
+b.disabled=true;g.style.display="none";n.style.display="none";a.style.display="none";UPD=null;upMsg("Checking for the latest version...");
+try{let j;try{j=JSON.parse(await upGet("version.json?t="+Date.now(),15000,false))}catch(e){throw e&&e.k?e:{k:"bad"}}
+const v=parseInt(j&&j.version,10),sha=String(j&&j.sha256||"").toLowerCase(),mb=parseInt(j&&j.minBuild,10)||0,cur=parseInt(APPV,10);
+if(!(v>0)||!/^[0-9a-f]{64}$/.test(sha))throw{k:"bad"};
+if(v<=cur){upMsg("You have the latest version ("+cur+").","var(--ok)");return}
+if(mb>(parseInt(APP_BUILD,10)||0)){upMsg("Version "+v+" needs a newer phone app file first. Download it, install it over this app, then check again. Your data stays.","var(--wn)");a.href=REL_URL;a.style.display="";return}
+if(lsGet("nkmm_fail")===String(v)){upMsg("Version "+v+" did not start on this phone before, so it was not installed again. Please tell Claude.","var(--bad)");return}
+UPD={v:v,sha:sha};upMsg("Version "+v+" is ready. You have version "+cur+".","var(--ok)");
+const nt=String(j.notes||"").slice(0,400);if(nt){n.textContent="What's new: "+nt;n.style.display="block"}
+g.disabled=false;g.style.display=""}
+catch(e){upErr(e)}finally{b.disabled=false}}
+async function applyUpdate(){const u=UPD,g=$("updgo"),b=$("updbtn");if(!u||g.disabled)return;g.disabled=true;b.disabled=true;upMsg("Downloading version "+u.v+"...");
+try{let buf;try{buf=await upGet("index.html?t="+Date.now(),60000,true)}catch(e){throw e&&e.k?e:{k:"net"}}
+if(buf.byteLength<50000)throw{k:"bad"};
+let h="";try{const d=await crypto.subtle.digest("SHA-256",buf);h=[...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,"0")).join("")}catch(e){throw{k:"bad"}}
+if(h!==u.sha)throw{k:"hash"};
+const html=new TextDecoder("utf-8").decode(buf),mv=/const APPV="(\d+)"/.exec(html);
+if(!/<title>NK MessMate<\/title>/.test(html)||!mv||parseInt(mv[1],10)!==u.v)throw{k:"ver"};
+try{persist()}catch(e){}
+try{localStorage.setItem("nkmm_ota",JSON.stringify({v:u.v,t:Date.now(),html:html}))}catch(e){throw{k:"space"}}
+if(lsGet("nkmm_ota")==null)throw{k:"space"};
+try{localStorage.removeItem("nkmm_boot");localStorage.removeItem("nkmm_fail")}catch(e){}
+upMsg("Version "+u.v+" is installed. Restarting the app...","var(--ok)");g.style.display="none";
+setTimeout(()=>{location.replace("index.html?r="+Date.now())},900)}
+catch(e){upErr(e);g.disabled=false;b.disabled=false}}
+function resetBuiltin(){const b=$("updreset");
+if(!RSTARM){RSTARM=true;b.textContent="Tap again to confirm";setTimeout(()=>{if(RSTARM){RSTARM=false;b.textContent="Use the built-in version"}},5000);return}
+try{localStorage.removeItem("nkmm_ota");localStorage.removeItem("nkmm_boot")}catch(e){}
+upMsg("Going back to the built-in version...");setTimeout(()=>{location.replace("index.html?r="+Date.now())},600)}
+let TS={open:[1],pin:[]};
+try{const t=JSON.parse(localStorage.getItem("nkmm_tabs")||"null");if(t&&Array.isArray(t.open)&&Array.isArray(t.pin)){const ok=a=>a.filter(n=>Number.isInteger(n)&&n>=1&&n<=7);TS={open:ok(t.open),pin:ok(t.pin)}}}catch(e){}
+function tabSave(){try{localStorage.setItem("nkmm_tabs",JSON.stringify(TS))}catch(e){}}
+function tabRender(){TS.pin.forEach(n=>{if(!TS.open.includes(n))TS.open.push(n)});
+for(let n=1;n<=7;n++){const o=TS.open.includes(n),pn=TS.pin.includes(n),t=$("tab"+n),c=$("nc"+n);t.classList.toggle("open",o);t.classList.toggle("pinned",pn);$("tb"+n).style.display=o?"block":"none";$("th"+n).setAttribute("aria-expanded",o);$("pin"+n).setAttribute("aria-pressed",pn);if(c){c.classList.toggle("on",o);c.classList.toggle("pnd",pn)}}
+const a=document.querySelector(".nc.on");if(a&&a.scrollIntoView)try{a.scrollIntoView({inline:"nearest",block:"nearest"})}catch(e){}}
+function tabClick(n){if(TS.pin.includes(n)){try{$("tab"+n).scrollIntoView({behavior:"smooth",block:"start"})}catch(e){}return}
+if(TS.open.includes(n))TS.open=TS.open.filter(x=>x!=n);else{TS.open=TS.open.filter(x=>TS.pin.includes(x));TS.open.push(n)}
+tabSave();tabRender();if(TS.open.includes(n))setTimeout(()=>{try{$("tab"+n).scrollIntoView({behavior:"smooth",block:"start"})}catch(e){}},30)}
+function tabPin(n){if(TS.pin.includes(n))TS.pin=TS.pin.filter(x=>x!=n);else{TS.pin.push(n);if(!TS.open.includes(n))TS.open.push(n)}tabSave();tabRender()}
+
+/* ---------- import ---------- */
+function lev(a,b){const m=a.length,n=b.length,d=[];for(let i=0;i<=m;i++)d[i]=[i];for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]==b[j-1]?0:1));return d[m][n]}
+function matchName(raw){const lo=raw.toLowerCase(),ex=S.m.map(p=>p.n);
+let h=ex.find(n=>n.toLowerCase()==lo);if(h)return{n:h,w:""};
+const fw=lo.split(/\s+/)[0];h=ex.find(n=>n.toLowerCase()==fw);if(h)return{n:h,w:"matched to "+h};
+if(lo.length>=4){let best=null,bd=9;ex.forEach(n=>{const d=lev(lo,n.toLowerCase());if(d<bd){bd=d;best=n}});
+if(best&&bd<=(lo.length>6?2:1))return{n:best,w:"similar to "+best+" - check"}}
+return{n:"",w:"new person"}}
+function splitLine(l){const t=l.includes("\t")?"\t":(l.includes(";")&&!l.includes(",")?";":",");return l.split(t).map(c=>c.trim().replace(/^"|"$/g,"").trim())}
+function num(v){const x=String(v).replace(/AED/ig,"").replace(/,/g,"").replace(/\s/g,"");return /^-?(\d+\.?\d*|\.\d+)$/.test(x)?parseFloat(x):NaN}
+function impParse(){const mode=$("immode").value||"e";IM={rows:[],tot:null,mode};
+const lines=$("imtxt").value.split(/\r?\n/).map(l=>l.trim()).filter(l=>l.replace(/[\t,;\s"]/g,""));
+lines.forEach((l,i)=>{const c=splitLine(l);
+if(i==0&&/name|who|paid|date|amount|days|remark/i.test(l)&&c.every(x=>isNaN(num(x))))return;
+const nm=c[0]||"";
+if(mode=="e"){
+if(/^total$/i.test(nm)){const v=num(c[c.length-1]);if(!isNaN(v))IM.tot=v;return}
+let dt="",am;if(c.length==2){am=c[1]}else{dt=c[1]||"";am=c[2]||""}const rk=c.length>3?c.slice(3).join(", ").trim().slice(0,80):"";
+const v=num(am);let err="";
+if(!nm)err="Name missing";else if(isNaN(v))err="Amount is not a number";else if(v<=0)err="Amount must be above 0";
+const mt=nm?matchName(nm):{n:"",w:""};
+const pd=parseDate(dt,CUR),dw=dt&&!pd.ok?"date not recognised, kept as text":"";
+IM.rows.push({line:i+1,raw:nm,dt:pd.ok?pd.iso:dt,a:v,r:rk,err,map:mt.n||"__new__",w:[mt.w,dw].filter(Boolean).join("; ")})
+}else{
+if(/^total$/i.test(nm))return;
+const d=num(c[1]||"");let err="",w="";
+if(!nm)err="Name missing";else if(isNaN(d)||d<0||d>62)err="Days must be a number from 0 to 62";
+const nt=(c[2]||"").trim(),wt=(c[3]||"").trim();
+let net=true,fx=false,fn=false;
+if(/^(no|n|0|false|-)$/i.test(nt))net=false;else if(/^(fixed|fix|f)$/i.test(nt))fn=true;else if(nt&&!/^(yes|y|1|true|✓)$/i.test(nt))w="Net? not recognised, assumed yes";
+if(/^(fixed|fix|f)$/i.test(wt))fx=true;else if(wt&&!/^(share|shared|s)$/i.test(wt))w=(w?w+"; ":"")+"Water not recognised, assumed share";
+const ex=S.m.find(p=>p.n.toLowerCase()==nm.toLowerCase());
+IM.rows.push({line:i+1,raw:nm,d,net,fx,fn,err,w,exists:!!ex})}});
+impRender()}
+function impCheck(){impParse()}
+function impMap(i,v){IM.rows[i].map=v;impRender()}
+function impRender(){
+const o=$("imout"),ex=IM.mode=="e",ok=IM.rows.filter(r=>!r.err),er=IM.rows.length-ok.length;
+if(!IM.rows.length){o.innerHTML="";$("imapply").disabled=true;$("imapply").textContent="Apply import";return}
+let h="";
+if(ex){
+const per={};let tot=0;
+h+='<table><thead><tr><th>#</th><th>Pasted name</th><th>Person</th><th>Date</th><th>Amount</th><th>Remark</th><th>Check</th></tr></thead><tbody>';
+IM.rows.forEach((r,i)=>{
+let sel="-",st=`<span class="pay">✗ ${esc(r.err)}</span>`;
+if(!r.err){
+sel=`<select onchange="impMap(${i},this.value)">`+S.m.map(p=>`<option value="${esc(p.n)}" ${r.map==p.n?"selected":""}>${esc(p.n)}</option>`).join("")+`<option value="__new__" ${r.map=="__new__"?"selected":""}>➕ New: ${esc(r.raw)}</option></select>`;
+st=r.w?`<span class="wn">⚠ ${esc(r.w)}</span>`:"✓";
+const k=r.map=="__new__"?r.raw:r.map;per[k]=(per[k]||0)+r.a;tot+=r.a}
+h+=`<tr><td>${r.line}</td><td>${esc(r.raw)}</td><td>${sel}</td><td>${esc(fmtD(r.dt))||"-"}</td><td>${isNaN(r.a)?"-":f(r.a)}</td><td>${esc(r.r||"")}</td><td>${st}</td></tr>`});
+h+='</tbody></table>';
+const inp=parseFloat($("imexp").value),want=inp>0?inp:IM.tot;
+h+=`<div class="kpi"><span>Valid rows: <b>${ok.length}</b></span><span>Errors (skipped): <b class="${er?"pay":""}">${er}</b></span><span>Total of valid rows: <b>${f(tot)}</b> AED</span></div>`;
+if(want!=null&&!isNaN(want)){const d=tot-want;h+=Math.abs(d)<0.005?`<p class="get">✓ Matches the expected total ${f(want)} AED${inp>0?"":" (from your Total row)"}</p>`:`<p class="pay">⚠ Expected ${f(want)} AED but valid rows add up to ${f(tot)} AED (difference ${d>0?"+":""}${f(d)}). Check the skipped rows.</p>`}
+else h+='<p style="color:var(--mu)">Tip: type the expected total above (or paste your Total row) to cross-check.</p>';
+h+='<div class="w"><table style="min-width:300px"><thead><tr><th>Person</th><th>Total in this import</th></tr></thead><tbody>'+Object.keys(per).map(k=>`<tr><td>${esc(k)}</td><td>${f(per[k])}</td></tr>`).join("")+'</tbody></table></div>'
+}else{
+h+='<table><thead><tr><th>#</th><th>Name</th><th>Days</th><th>Net?</th><th>Water</th><th>Check</th></tr></thead><tbody>';
+IM.rows.forEach(r=>{const st=r.err?`<span class="pay">✗ ${esc(r.err)}</span>`:r.w?`<span class="wn">⚠ ${esc(r.w)}</span>`:(r.exists?"✓ updates existing":"✓ new person");
+h+=`<tr><td>${r.line}</td><td>${esc(r.raw)}</td><td>${isNaN(r.d)?"-":r.d}</td><td>${r.err?"-":(r.fn?"fixed":r.net?"yes":"no")}</td><td>${r.err?"-":(r.fx?"fixed":"share")}</td><td>${st}</td></tr>`});
+h+='</tbody></table>';
+h+=`<div class="kpi"><span>Valid rows: <b>${ok.length}</b></span><span>Errors (skipped): <b class="${er?"pay":""}">${er}</b></span><span>Total person-days: <b>${ok.reduce((a,r)=>a+r.d,0)}</b></span></div>`}
+o.innerHTML=h;
+$("imapply").disabled=!ok.length;$("imapply").textContent=`Apply ${ok.length} valid row${ok.length==1?"":"s"}`+(er?` (skip ${er})`:"")}
+function toggleImp(){const d=$("imp");d.style.display=d.style.display=="none"?"block":"none";if(d.style.display=="block"){$("immsg").textContent="";const t=$("imtxt");if(t.focus)t.focus()}}
+function impClear(){$("imtxt").value="";IM={rows:[],tot:null,mode:$("immode").value||"e"};$("immsg").textContent="";impRender()}
+function impFile(inp){const fl=inp.files&&inp.files[0];if(!fl)return;const rd=new FileReader();rd.onload=()=>{$("imtxt").value=String(rd.result);impCheck()};rd.readAsText(fl);inp.value=""}
+function impApply(){if(lk())return;const mode=IM.mode,rows=IM.rows.filter(r=>!r.err);if(!rows.length)return;const rep=$("imhow").value=="r",added=[];
+if(mode=="e"){
+rows.forEach(r=>{if(r.map=="__new__"){const nm=r.raw.trim();let q=S.m.find(p=>p.n.toLowerCase()==nm.toLowerCase());if(!q){const dd=dim(CUR);q=mkP(nm,dd,"u","s",dd,dd);S.m.push(q);added.push(nm)}r.map=q.n}});
+const ne=rows.map(r=>Object.assign({n:r.map,dt:r.dt,a:r.a},r.r?{r:r.r}:{}));S.e=rep?ne:S.e.concat(ne)
+}else{
+const nm=rows.map(r=>mkP(r.raw,r.d,r.fn?"f":r.net?"u":"n",r.fx?"f":"s",r.d,r.d));
+if(rep)S.m=nm;else nm.forEach(p=>{const i=S.m.findIndex(x=>x.n.toLowerCase()==p.n.toLowerCase());if(i>=0){p.n=S.m[i].n;S.m[i]=Object.assign(S.m[i],p)}else S.m.push(p)})}
+draw();
+$("imtxt").value="";IM={rows:[],tot:null,mode};impRender();$("imp").style.display="none";
+$("immsg").textContent=`✓ Imported ${rows.length} ${mode=="e"?"expense":"people"} row${rows.length==1?"":"s"}`+(added.length?`. New people added with ${dim(CUR)} days (check section 2): ${added.join(", ")}`:"")}
+
+/* ---------- close / freeze a month ---------- */
+function applyLock(){const L=!!S.lock;
+document.querySelectorAll("main input, main select, main textarea, main button").forEach(el=>{
+if(el.closest("#navc,#lockbar")||el.hasAttribute("data-keep"))return;
+if(L){if(!el.disabled){el.disabled=true;el.setAttribute("data-lk","1")}}
+else if(el.getAttribute("data-lk")){el.disabled=false;el.removeAttribute("data-lk")}});
+document.body.classList.toggle("locked",L);renderLock()}
+const fmtTs=t=>{if(!t)return "";const d=new Date(t);return p2(d.getDate())+"-"+MN[d.getMonth()]+"-"+d.getFullYear()+" "+p2(d.getHours())+":"+p2(d.getMinutes())};
+let CLCONF=0;
+function renderLock(){const lb=$("lockbar"),cb=$("closebox");
+if(S.lock){const w=S.lockAt?" on "+fmtTs(S.lockAt):"";
+lb.style.display="block";
+lb.innerHTML=`<b>${ic("lock")} ${ML()} is closed${w}.</b> Editing is frozen for everyone. <div class="btns"><button class="p" data-keep onclick="unlockMonth()">${ic("unlock")} Unlock to edit</button><button data-keep onclick="pwOpen('change')">${ic("key")} Change password</button></div>`;
+cb.innerHTML=`<p style="margin:0 0 8px"><b>${ic("lock")} This month is closed${w}.</b></p><button class="p" data-keep onclick="unlockMonth()">${ic("unlock")} Unlock to edit</button>`}
+else{lb.style.display="none";lb.innerHTML="";
+const empty=!S.m.length&&!S.e.length;
+const warn=empty?"":(CLOSED?`<p class="get" style="margin:0 0 8px">✓ Everything is settled - ready to close.</p>`:`<p class="wn" style="margin:0 0 8px">⚠ Some payments are still pending. You can still close, but check first.</p>`);
+cb.innerHTML=warn+`<button class="p" onclick="closeMonth()">${CLCONF?"Payments still pending - tap again to close anyway":ic("check")+" Complete &amp; close this month"}</button>`+(LOCKCFG?` <button onclick="pwOpen('change')">${ic("key")} Change password</button>`:"")+`<p style="color:var(--mu);font-size:12px;margin:8px 0 0">Closing freezes this month: nobody can change people, expenses, bills or ticks until you unlock it with your password.</p>`}}
+function closeMonth(){if(S.lock)return;if(!S.m.length&&!S.e.length){note("Nothing to close - this month is empty");return}
+if(!CLOSED&&!CLCONF){CLCONF=1;renderLock();setTimeout(()=>{CLCONF=0;if(!S.lock)renderLock()},5000);return}
+CLCONF=0;if(!LOCKCFG){pwOpen("set");return}doLock()}
+function doLock(){S.lock=true;S.lockAt=Date.now();CLCONF=0;calc();note("🔒 Month closed and frozen");try{window.scrollTo(0,0)}catch(e){}}
+function unlockMonth(){if(!S.lock)return;if(!LOCKCFG){S.lock=false;S.lockAt=0;calc();note("Unlocked (no password was set)");return}pwOpen("unlock")}
+const rndHex=n=>{const a=new Uint8Array(n);try{crypto.getRandomValues(a)}catch(e){for(let i=0;i<n;i++)a[i]=Math.floor(Math.random()*256)}return [...a].map(b=>b.toString(16).padStart(2,"0")).join("")};
+async function hashPw(pw,salt){try{if(typeof crypto!=="undefined"&&crypto.subtle){const enc=new TextEncoder(),km=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveBits"]);
+const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:enc.encode(salt),iterations:100000,hash:"SHA-256"},km,256);return [...new Uint8Array(bits)].map(b=>b.toString(16).padStart(2,"0")).join("")}}catch(e){}
+let h1=0xdeadbeef,h2=0x41c6ce57;const t=salt+"|"+pw;for(let i=0;i<t.length;i++){const c=t.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}
+h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return "f"+(4294967296*(2097151&h2)+(h1>>>0)).toString(16)}
+async function setPw(pw){const s=rndHex(16);LOCKCFG={s,h:await hashPw(pw,s),u:Date.now()};lsSave();dbPutLock()}
+async function chkPw(pw){if(!LOCKCFG)return true;return (await hashPw(pw,LOCKCFG.s))===LOCKCFG.h}
+function dbPutLock(){if(DB&&LOCKCFG){try{DB.doc("settings/lock").set({s:LOCKCFG.s,h:LOCKCFG.h,u:LOCKCFG.u}).catch(()=>{})}catch(e){}}}
+let PW=null;
+function pwOpen(mode){PW={mode};
+const set=(id,show,txt)=>{$(id).style.display=show?"flex":"none";if(txt)$(id+"t").textContent=txt;$("p"+id.slice(1)).value=""};
+$("pwe").textContent="";
+if(mode=="set"){$("pwt").textContent="Set a password";$("pwd").textContent="You will need this password to unlock a closed month. It cannot be recovered here, so remember it.";set("l1",1,"New password (at least 4 characters)");set("l2",1,"Repeat password");set("l3",0);$("pwok").textContent="Set password and close month"}
+else if(mode=="unlock"){$("pwt").textContent="Unlock "+ML();$("pwd").textContent="Enter your password to edit this month.";set("l1",1,"Password");set("l2",0);set("l3",0);$("pwok").textContent="Unlock"}
+else{$("pwt").textContent="Change password";$("pwd").textContent="Applies to all months.";set("l1",1,"Current password");set("l2",1,"New password (at least 4 characters)");set("l3",1,"Repeat new password");$("pwok").textContent="Change password"}
+$("pwm").style.display="flex";setTimeout(()=>{try{$("p1").focus()}catch(e){}},50)}
+function pwClose(){PW=null;$("pwm").style.display="none";["p1","p2","p3"].forEach(i=>$(i).value="")}
+function pwCancel(){CLCONF=0;pwClose();renderLock()}
+function pwKey(e){if(e.key=="Enter"){e.preventDefault();pwOk()}}
+async function pwOk(){if(!PW)return;const mode=PW.mode,a=$("p1").value,b=$("p2").value,c=$("p3").value,er=m=>{$("pwe").textContent=m};er("");$("pwok").disabled=true;
+try{
+if(mode=="set"){if(a.length<4)return er("Password must be at least 4 characters");if(a!==b)return er("The two passwords do not match");await setPw(a);pwClose();doLock()}
+else if(mode=="unlock"){if(!(await chkPw(a))){await new Promise(r=>setTimeout(r,600));return er("Wrong password")}pwClose();S.lock=false;S.lockAt=0;calc();note("🔓 Unlocked - you can edit now")}
+else{if(!(await chkPw(a)))return er("Current password is wrong");if(b.length<4)return er("New password must be at least 4 characters");if(b!==c)return er("The new passwords do not match");await setPw(b);pwClose();note("🔑 Password changed")}
+}catch(e){er("Something went wrong - please try again")}finally{$("pwok").disabled=false}}
+
+/* ---------- backup and restore ---------- */
+const todayStr=()=>{const t=new Date();return t.getFullYear()+"-"+p2(t.getMonth()+1)+"-"+p2(t.getDate())};
+const bk=m=>{$("bkmsg").textContent=m;clearTimeout(bk.t);bk.t=setTimeout(()=>{$("bkmsg").textContent=""},6000)};
+function buildBackup(){persist();const ms={};Object.keys(ALL).sort().forEach(k=>{if(!isEmpty(ALL[k]))ms[k]=ALL[k]});
+return JSON.stringify({app:"mess-bill-generator",version:1,exported:new Date().toISOString(),lock:LOCKCFG,settings:APP,months:ms},null,1)}
+async function backupNow(){const txt=buildBackup(),nm="mess-bill-backup-"+todayStr()+".json",n=Object.keys(JSON.parse(txt).months).length;
+if(!n){bk("Nothing to back up yet - no saved months");return}
+try{const dl=typeof claude!=="undefined"&&claude.use?await claude.use("downloads"):null;
+if(dl){try{await dl.save({filename:nm,data:txt});bk(`✓ Backup saved (${n} month${n==1?"":"s"}): ${nm}`);return}catch(e){if(e&&e.code=="declined")return}}}catch(e){}
+try{const b=new Blob([txt],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=nm;document.body.appendChild(a);a.click();a.remove();bk("Backup file created. If nothing downloaded, tap 'Copy backup text' instead.")}catch(e){bk("Could not create a file - tap 'Copy backup text' instead")}}
+function backupCopy(){const txt=buildBackup(),n=Object.keys(JSON.parse(txt).months).length;if(!n){bk("Nothing to back up yet - no saved months");return}copyText(txt);bk(`✓ Backup text copied (${n} month${n==1?"":"s"}). Paste it into Notes or WhatsApp to keep it.`)}
+let RST=null;
+function toggleRst(){const d=$("rst");d.style.display=d.style.display=="none"?"block":"none"}
+function rstFile(inp){const fl=inp.files&&inp.files[0];if(!fl)return;const rd=new FileReader();rd.onload=()=>{$("rtxt").value=String(rd.result);rstCheck()};rd.readAsText(fl);inp.value=""}
+function cleanMonth(x){if(!x||typeof x!=="object")return null;const n=norm(x);
+const bo=o=>{const r={};if(o&&typeof o==="object")Object.keys(o).forEach(k=>{if(o[k])r[k]=true});return r};
+n.r=bo(n.r);n.f=bo(n.f);n.bp=bo(n.bp);
+n.m=n.m.filter(p=>p&&typeof p.n==="string"&&p.n.trim()).map(p=>({n:p.n.trim(),d:Math.max(0,+p.d||0),net:!!p.net,fx:!!p.fx,man:!!p.man,nd:Math.max(0,+p.nd||0),wd:Math.max(0,+p.wd||0),im:["u","n","m","f"].includes(p.im)?p.im:undefined,wm:["s","n","f","m"].includes(p.wm)?p.wm:undefined,xm:["s","n","f","m"].includes(p.xm)?p.xm:undefined,xd:["s","n","f","m"].includes(p.xm)?Math.max(0,+p.xd||0):undefined}));
+n.e=n.e.filter(e=>e&&typeof e.n==="string"&&isFinite(+e.a)).map(e=>Object.assign({n:e.n,dt:/^\d{4}-\d{2}-\d{2}$/.test(e.dt||"")?e.dt:"",a:+e.a},typeof e.r==="string"&&e.r.trim()?{r:e.r.trim().slice(0,80)}:{}));
+n.adv=n.adv.filter(a=>a&&typeof a.f==="string"&&typeof a.t==="string"&&isFinite(+a.a)).map(a=>({f:a.f,t:a.t,dt:/^\d{4}-\d{2}-\d{2}$/.test(a.dt||"")?a.dt:"",a:+a.a}));
+return n}
+function rstCheck(){const t=$("rtxt").value.trim();RST=null;
+if(t){try{const j=JSON.parse(t);if(!j||typeof j!=="object"||!j.months||typeof j.months!=="object"||!(j.app==="mess-bill-generator"||(j.app&&typeof j.app==="object"&&typeof j.app.mess==="string")))throw 0;
+const ms={};let bad=0;Object.keys(j.months).forEach(k=>{const c=/^\d{4}-\d{2}$/.test(k)?cleanMonth(j.months[k]):null;if(c&&!isEmpty(c))ms[k]=c;else bad++});
+RST={ms,bad,lock:j.lock&&j.lock.h&&j.lock.s?{s:String(j.lock.s),h:String(j.lock.h),u:+j.lock.u||0}:null,when:j.exported||"",app:j.settings&&typeof j.settings==="object"?cleanApp(j.settings):(j.app&&typeof j.app==="object"?cleanApp(j.app):null)}}
+catch(e){RST={err:"This is not a valid Mess Bill backup."}}}
+rstRender()}
+function rstAct(k,rep){const r=RST.ms[k],l=ALL[k];if(rep)return"put";if(!l||isEmpty(l))return"new";if(l.lock)return"skip";if(sigOf(l)===sigOf(r))return"same";return r.u>l.u?"newer":"keep"}
+const ACTT={put:"will be restored",new:"new - will be added",newer:"newer in backup - will update",keep:"older than here - kept as is",same:"same as here",skip:"closed here - not changed"};
+function rstRender(){const o=$("rout"),b=$("rapply"),rep=$("rhow").value=="r";$("rpwl").style.display=(rep&&LOCKCFG)?"flex":"none";
+if(!RST){o.innerHTML="";b.disabled=true;b.textContent="Restore";return}
+if(RST.err){o.innerHTML=`<p class="pay">✗ ${esc(RST.err)}</p>`;b.disabled=true;b.textContent="Restore";return}
+const ks=Object.keys(RST.ms).sort().reverse();let go=0;
+const rows=ks.map(k=>{const r=RST.ms[k],a=rstAct(k,rep);if(a=="put"||a=="new"||a=="newer")go++;return `<tr><td>${mshort(k)}</td><td>${f(r.e.reduce((s,x)=>s+x.a,0))} AED</td><td>${r.m.length} people${r.lock?" · 🔒":""}</td><td class="${a=="skip"?"wn":""}">${ACTT[a]}</td></tr>`}).join("");
+o.innerHTML=`<div class="w"><table style="min-width:420px"><thead><tr><th>Month</th><th>Groceries</th><th>People</th><th>What happens</th></tr></thead><tbody>${rows}</tbody></table></div>`+(RST.bad?`<p class="wn">⚠ ${RST.bad} empty or invalid entr${RST.bad==1?"y":"ies"} ignored.</p>`:"")+(rep?`<p class="wn">⚠ Replace deletes every month on this device that is not in the backup.</p>`:"");
+b.disabled=!ks.length;b.textContent=ks.length?(rep?`Replace with ${ks.length} month${ks.length==1?"":"s"}`:`Restore (${go} change${go==1?"":"s"})`):"Restore"}
+async function rstApply(){if(!RST||RST.err)return;const rep=$("rhow").value=="r",ks=Object.keys(RST.ms);if(!ks.length)return;
+if(rep&&LOCKCFG&&!(await chkPw($("rpw").value))){bk("✗ Wrong password - nothing was changed");return}
+persist();let changed=0,skipped=0;const touched=[];
+if(rep)Object.keys(ALL).forEach(k=>{if(!RST.ms[k]){delete ALL[k];touched.push(k)}});
+ks.forEach(k=>{const a=rstAct(k,rep),r=RST.ms[k];
+if(a=="put"){r.u=Date.now();ALL[k]=r;touched.push(k);changed++}
+else if(a=="new"||a=="newer"){r.u=r.u||Date.now();ALL[k]=r;touched.push(k);changed++}
+else if(a=="skip")skipped++});
+if(RST.lock&&(!LOCKCFG||rep&&RST.lock.u>=0)){LOCKCFG=RST.lock;dbPutLock()}
+if(RST.app&&(rep||RST.app.u>APP.u)){APP=RST.app;if(rep)APP.u=Date.now();lsSave();updMess();dbPutApp()}
+$("rpw").value="";$("rtxt").value="";RST=null;rstRender();
+lsSave();loadCur(CUR);init();renderHist();touched.forEach(k=>dbQueue(k));
+$("rst").style.display="none";
+bk(`✓ Restored ${changed} month${changed==1?"":"s"}`+(skipped?` (${skipped} closed month${skipped==1?"":"s"} left unchanged)`:""))}
+(function(){let c=lsLoad();const ks=Object.keys(ALL).filter(k=>!isEmpty(ALL[k])).sort();
+if(!/^\d{4}-\d{2}$/.test(c||""))c=ks.length?ks[ks.length-1]:todayKey();loadCur(c)})();
+$("logoimg").src=LOGO_SRC;$("logoimg2").src=LOGO_SRC;buildNav();tabRender();init();renderHist();dbInit();
+try{localStorage.removeItem("nkmm_boot")}catch(e){}
+</script></body></html>

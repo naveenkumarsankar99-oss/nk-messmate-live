@@ -1,0 +1,7 @@
+{
+  "version": 23,
+  "notes": "Test update: same app, only the version number changed. If you can read this and Settings shows version 23, Check for Update works.",
+  "sha256": "1b5658f0daa423562f27fb56c35ac0524777c09c13678b0b846567a68ad2e9dd",
+  "size": 187861,
+  "minBuild": 0
+}
